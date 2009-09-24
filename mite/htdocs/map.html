@@ -1,0 +1,31 @@
+<HTML>
+  <HEAD>
+    <STYLE type="text/css">
+      IMG#mover {
+      position:absolute;
+      top:0px;
+      left:0px;
+      z-index:1;
+      }
+    </STYLE>
+    <SCRIPT type="text/javascript">
+      function init() {
+      for (var x = 0; x < 512; x += 16) {
+			  for (var y = 0; y < 256; y += 16) {
+					      var elem = document.createElement("img");
+					      elem.src = 'tileset.gif';
+					      elem.id = 'mover';
+					      elem.style.clip = 'rect(16px 32px 32px 16px)';
+					      elem.style.left = x + 'px';
+					      elem.style.top = y + 'px';
+					      document.body.appendChild(elem);
+					      }
+					      }
+      }
+      window.onload = init;
+    </SCRIPT>
+  </HEAD>
+  <BODY>
+
+  </BODY>
+</HTML>

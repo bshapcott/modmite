@@ -1,0 +1,142 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <link id="themeStyles" rel="stylesheet" href="/js/dojo-release-1.3.1-src/dijit/themes/nihilo/nihilo.css">
+      <style type="text/css">
+        @import "/js/dojo-release-1.3.1-src/dojo/resources/dojo.css";
+      </style>
+      <!--  isDebug: true, -->
+      <script type="text/javascript" src="/js/dojo-release-1.3.1-src/dojo/dojo.js" djConfig="debugAtAllCosts:true, isDebug: true, parseOnLoad: false, dojoIframeHistoryUrl:'/js/dojo-release-1.3.1-src/dojo/resources/iframe_history.html'">
+      </script>
+      <script type="text/javascript" src="/js/jquery-1.3.2.js"></script>
+      </head>
+  <body>
+    <!-- request widget is hidden in a div -->
+    <!-- making a request does not directly invoke AJAX -->
+    <div class="datamite" style="">
+      <div endpoint="http://localhost" scope="?">
+        <form action="">
+          <input type="number" name="a" value="1"></input>
+          <input type="number" name="b" value="2"></input>
+        </form>
+      </div>
+    </div>
+
+    <!-- widget's data is hidden in a div -->
+    <div class="mite-data" style="">
+      <!-- request tag is the request that resulted in the data contents -->
+      <!-- endpoint identifies a data service -->
+      <!-- requests to the same endpoint can be batched -->
+      <!-- requests to different data sources must be separated -->
+      <!-- request is a transaction boundary -->
+      <!-- scope identifies the request scope for updates during later notification -->
+      <div class="mite-request"  query="http://localhost/dir/test?a=1&b=2" endpoint="http://localhost" scope="?">
+        <!-- data source involved in the request -->
+        <!-- a single request may involve multiple data sources -->
+        <!-- all data sources are located at the same endpoint -->
+        <div class="mite-data-source mite-db" url="http://localhost/dir/" name="test">
+          <!-- result of the request -->
+          <!-- multiple results may be returned by each data-source for a single request -->
+          <div class="mite-result mite-prepared-statement-set" a="1" b="x">
+            <!-- a set of heterogeneously structured results -->
+            <table class="prepared-statement metadata-name" a="1">
+              <thead>
+                <th>x</th>
+                <th>y</th>
+                <th>z</th>
+              </thead>
+              <tbody>
+                <!-- an individual element of the result -->
+                <!-- may include child elements for certain result types -->
+                <tr>
+                  <td>0</td>
+                  <td>9</td>
+                  <td>11</td>
+                </tr>
+                <tr>
+                  <td>4</td>
+                  <td>2</td>
+                  <td>-9</td>
+                </tr>
+                <tr>
+                  <td>-1</td>
+                  <td>0</td>
+                  <td>8</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>float</td>
+                  <td>float</td>
+                  <td>float</td>
+                </tr>
+              </tfoot>
+            </table>
+            <table class="mite-prepared-statement mite-metadata-name">
+              <thead>
+                <tr>
+                  <td>name</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Toledo</td>
+                </tr>
+                <tr>
+                  <td>Boston</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>text/plain</td>
+                </tr>
+              </tfoot>
+            </table>
+            <table>
+              <thead>
+                <tr>
+                  <td>type</td>
+                  <td>message</td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>info</td>
+                  <td>Hello!</td>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>text/plain</td>
+                  <td>text/plain</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="mite-request" query="json" endpoint="http://localhost" scope="">
+        <div class="mite-data-source mite-db" url="http://localhost/dir/test" name="test">
+          <div class="mite-result">
+            <table>
+              
+            </table>
+          </div>
+        </div>
+        <div class="mite-data-source mite-db" url="http://localhost/base/dir/common" name="common">
+          <table>
+            
+          </table>
+        </div>
+        <!-- as the request is processed in order, the same data source may repeat -->
+        <!-- results for the same data source will not be combined -->
+        <div class="mite-data-source mite-db" url="http://localhost/dir/test" name="test">
+          <table>
+            
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

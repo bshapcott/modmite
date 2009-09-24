@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<script type="text/javascript"
+		src="/js/dojo-release-1.2.0-src/dojo/dojo.js"
+		djConfig="debugAtAllCosts:true, isDebug: true, parseOnLoad: true, dojoIframeHistoryUrl:'/js/dojo-release-1.2.0-src/dojo/resources/iframe_history.html'">
+	</script>
+	<link id="themeStyles" rel="stylesheet" href="/js/dojo-release-1.2.0-src/dijit/themes/nihilo/nihilo.css">
+	<style type="text/css">
+		@import "/js/dojo-release-1.2.0-src/dojo/resources/dojo.css";
+	</style>
+</head>
+<body class="nihilo">
+	<a href="http://dojocampus.org/explorer/#Dojo_Data_ItemFileReadStore_Basic">ItemFileReadStore example</a>
+	<br/>
+	<a href="http://dojotoolkit.org/2008/02/24/dijit-tree-and-dojo-data-dojo-1-1-model">dijit.Tree.model example</a>
+	<br/>
+	<script type="text/javascript">
+		dojo.require("dijit.form.Button");
+		dojo.require("dijit.Tree");
+		dojo.require("dojo.data.ItemFileReadStore");
+		dojo.require("dojo.parser");
+
+		var gotContinents = function(items, request){
+			var buffer = ["<b>Retrieved the following data</b>"];
+			for (var i = 0; i < items.length; i++){
+				var item = items[i];
+				buffer.push(countryStore.getLabel(item));
+			}
+			dojo.byId("dataOutput").innerHTML = buffer.join("<br/>");
+		}
+
+		var queryContinents = {type:"continent"};
+		var queryCountries = {type:"country"};
+
+		var getData = function(query){
+			countryStore.fetch({query: query, onComplete: gotContinents});  
+		};
+
+		dojo.addOnLoad(function(){
+			countryStore = new dojo.data.ItemFileReadStore({url: "/countries.json"});
+			var myModel = new dijit.tree.ForestStoreModel({
+				store: countryStore,
+				query: {type:'continent'},
+				rootId: "earth",
+				rootLabel: "Earth",
+				childrenAttr: "children"
+			});
+			var tree = new dijit.Tree({
+				model: myModel,
+				childrenAttr: "children"
+			});
+			dojo.body().appendChild(document.createElement("hr"));
+			var txt = document.createElement("h1");
+			txt.innerHTML="Dijit Forest Store Programmatic";
+			dojo.body().appendChild(txt);
+			dojo.body().appendChild(tree.domNode);
+			dojo.body().appendChild(document.createElement("hr"));
+			tree.startup();
+		});
+
+</script>
+<button dojoType="dijit.form.Button" onclick="getData(queryContinents);" ID="Button1">Find all continents</button>
+<button dojoType="dijit.form.Button" onclick="getData(queryCountries);" ID="Button2">Find all countries</button>
+<br/><br/>
+<div id="dataOutput">
+  The retrieved data is written here
+</div>
+</body>
+</html>

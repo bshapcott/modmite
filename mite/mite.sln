@@ -1,0 +1,103 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sqlite3", "thirdparty\sqlite3\sqlite3.vcproj", "{B2C7D3E7-E5B4-48FC-9BA2-FFCE7489F1F9}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "htdocs", "htdocs\htdocs.vcproj", "{418A2413-7BF2-4A37-BDB0-9FF57DDB0916}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mod_mite", "mod_mite\mod_mite.vcproj", "{4874BFBD-1E42-4A0D-809D-AE2475119ACA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B0472C12-15B2-43B7-A2A1-7F349213100C} = {B0472C12-15B2-43B7-A2A1-7F349213100C}
+		{418A2413-7BF2-4A37-BDB0-9FF57DDB0916} = {418A2413-7BF2-4A37-BDB0-9FF57DDB0916}
+		{C32121A4-E0A0-4B8D-B2CC-24E37686E371} = {C32121A4-E0A0-4B8D-B2CC-24E37686E371}
+		{B2C7D3E7-E5B4-48FC-9BA2-FFCE7489F1F9} = {B2C7D3E7-E5B4-48FC-9BA2-FFCE7489F1F9}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sql", "sql\sql.vcproj", "{C32121A4-E0A0-4B8D-B2CC-24E37686E371}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "yajl", "thirdparty\yajl\build\src\yajl.vcproj", "{B0472C12-15B2-43B7-A2A1-7F349213100C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Lexical|Win32 = Lexical|Win32
+		MinSizeRel|Win32 = MinSizeRel|Win32
+		Release|Win32 = Release|Win32
+		RelWithDebInfo|Win32 = RelWithDebInfo|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B2C7D3E7-E5B4-48FC-9BA2-FFCE7489F1F9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B2C7D3E7-E5B4-48FC-9BA2-FFCE7489F1F9}.Debug|Win32.Build.0 = Debug|Win32
+		{B2C7D3E7-E5B4-48FC-9BA2-FFCE7489F1F9}.Lexical|Win32.ActiveCfg = Release|Win32
+		{B2C7D3E7-E5B4-48FC-9BA2-FFCE7489F1F9}.Lexical|Win32.Build.0 = Release|Win32
+		{B2C7D3E7-E5B4-48FC-9BA2-FFCE7489F1F9}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{B2C7D3E7-E5B4-48FC-9BA2-FFCE7489F1F9}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{B2C7D3E7-E5B4-48FC-9BA2-FFCE7489F1F9}.Release|Win32.ActiveCfg = Release|Win32
+		{B2C7D3E7-E5B4-48FC-9BA2-FFCE7489F1F9}.Release|Win32.Build.0 = Release|Win32
+		{B2C7D3E7-E5B4-48FC-9BA2-FFCE7489F1F9}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{B2C7D3E7-E5B4-48FC-9BA2-FFCE7489F1F9}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{418A2413-7BF2-4A37-BDB0-9FF57DDB0916}.Debug|Win32.ActiveCfg = Debug|Win32
+		{418A2413-7BF2-4A37-BDB0-9FF57DDB0916}.Lexical|Win32.ActiveCfg = Release|Win32
+		{418A2413-7BF2-4A37-BDB0-9FF57DDB0916}.Lexical|Win32.Build.0 = Release|Win32
+		{418A2413-7BF2-4A37-BDB0-9FF57DDB0916}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{418A2413-7BF2-4A37-BDB0-9FF57DDB0916}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{418A2413-7BF2-4A37-BDB0-9FF57DDB0916}.Release|Win32.ActiveCfg = Release|Win32
+		{418A2413-7BF2-4A37-BDB0-9FF57DDB0916}.Release|Win32.Build.0 = Release|Win32
+		{418A2413-7BF2-4A37-BDB0-9FF57DDB0916}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{418A2413-7BF2-4A37-BDB0-9FF57DDB0916}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{4874BFBD-1E42-4A0D-809D-AE2475119ACA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4874BFBD-1E42-4A0D-809D-AE2475119ACA}.Debug|Win32.Build.0 = Debug|Win32
+		{4874BFBD-1E42-4A0D-809D-AE2475119ACA}.Lexical|Win32.ActiveCfg = Release|Win32
+		{4874BFBD-1E42-4A0D-809D-AE2475119ACA}.Lexical|Win32.Build.0 = Release|Win32
+		{4874BFBD-1E42-4A0D-809D-AE2475119ACA}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{4874BFBD-1E42-4A0D-809D-AE2475119ACA}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{4874BFBD-1E42-4A0D-809D-AE2475119ACA}.Release|Win32.ActiveCfg = Release|Win32
+		{4874BFBD-1E42-4A0D-809D-AE2475119ACA}.Release|Win32.Build.0 = Release|Win32
+		{4874BFBD-1E42-4A0D-809D-AE2475119ACA}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{4874BFBD-1E42-4A0D-809D-AE2475119ACA}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{C32121A4-E0A0-4B8D-B2CC-24E37686E371}.Debug|Win32.ActiveCfg = Debug|Win32
+		{C32121A4-E0A0-4B8D-B2CC-24E37686E371}.Lexical|Win32.ActiveCfg = Release|Win32
+		{C32121A4-E0A0-4B8D-B2CC-24E37686E371}.Lexical|Win32.Build.0 = Release|Win32
+		{C32121A4-E0A0-4B8D-B2CC-24E37686E371}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{C32121A4-E0A0-4B8D-B2CC-24E37686E371}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{C32121A4-E0A0-4B8D-B2CC-24E37686E371}.Release|Win32.ActiveCfg = Release|Win32
+		{C32121A4-E0A0-4B8D-B2CC-24E37686E371}.Release|Win32.Build.0 = Release|Win32
+		{C32121A4-E0A0-4B8D-B2CC-24E37686E371}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{C32121A4-E0A0-4B8D-B2CC-24E37686E371}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{B0472C12-15B2-43B7-A2A1-7F349213100C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B0472C12-15B2-43B7-A2A1-7F349213100C}.Debug|Win32.Build.0 = Debug|Win32
+		{B0472C12-15B2-43B7-A2A1-7F349213100C}.Lexical|Win32.ActiveCfg = RelWithDebInfo|Win32
+		{B0472C12-15B2-43B7-A2A1-7F349213100C}.Lexical|Win32.Build.0 = RelWithDebInfo|Win32
+		{B0472C12-15B2-43B7-A2A1-7F349213100C}.MinSizeRel|Win32.ActiveCfg = MinSizeRel|Win32
+		{B0472C12-15B2-43B7-A2A1-7F349213100C}.MinSizeRel|Win32.Build.0 = MinSizeRel|Win32
+		{B0472C12-15B2-43B7-A2A1-7F349213100C}.Release|Win32.ActiveCfg = Release|Win32
+		{B0472C12-15B2-43B7-A2A1-7F349213100C}.Release|Win32.Build.0 = Release|Win32
+		{B0472C12-15B2-43B7-A2A1-7F349213100C}.RelWithDebInfo|Win32.ActiveCfg = RelWithDebInfo|Win32
+		{B0472C12-15B2-43B7-A2A1-7F349213100C}.RelWithDebInfo|Win32.Build.0 = RelWithDebInfo|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SourceCodeControl) = preSolution
+		SccNumberOfProjects = 6
+		SccLocalPath0 = .
+		CanCheckoutShared = true
+		SolutionUniqueID = {BCC3F8AF-555C-433A-B8FA-1D39A63DF67E}
+		SccProjectUniqueName1 = htdocs\\htdocs.vcproj
+		SccLocalPath1 = htdocs
+		CanCheckoutShared = true
+		SccProjectUniqueName2 = mod_mite\\mod_mite.vcproj
+		SccLocalPath2 = mod_mite
+		CanCheckoutShared = true
+		SccProjectUniqueName3 = thirdparty\\sqlite3\\sqlite3.vcproj
+		SccLocalPath3 = thirdparty\\sqlite3
+		CanCheckoutShared = true
+		SccProjectUniqueName4 = thirdparty\\yajl-0.4.0\\build\\src\\yajl.vcproj
+		SccLocalPath4 = .
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection4 = thirdparty\\yajl-0.4.0\\build\\src\\
+		SccProjectUniqueName5 = sql\\sql.vcproj
+		SccLocalPath5 = .
+		CanCheckoutShared = true
+		SccProjectFilePathRelativizedFromConnection5 = sql\\
+	EndGlobalSection
+EndGlobal
