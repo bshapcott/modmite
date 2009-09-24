@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<link id="themeStyles" rel="stylesheet" href="/js/dojo-release-1.2.0-src/dijit/themes/nihilo/nihilo.css">
+			<style type="text/css">
+		@import "/js/dojo-release-1.2.0-src/dojo/resources/dojo.css";
+	</style>
+			<script type="text/javascript" src="/js/dojo-release-1.2.0-src/dojo/dojo.js" djConfig="debugAtAllCosts:true, isDebug: true, parseOnLoad: true, dojoIframeHistoryUrl:'/js/dojo-release-1.2.0-src/dojo/resources/iframe_history.html'">
+			</script>
+	</head>
+	<body class="nihilo">
+		<script language="JavaScript" type="text/javascript">
+			dojo.require("dojox.rpc.Rest");
+			dojo.require("dojox.data.JsonRestStore");
+			// dojo.require("dijit.Tree");
+			// dojo.require("dojo.parser");  // scan page for widgets and instantiate them
+			dojo.addOnLoad(function() {
+				// store = new dojox.data.JsonRestStore({target: "/slite/game/"});
+				// req = store.fetch({query: "task/2"})
+				// it = store.fetchItemByIdentity({identity: "task/2"});
+				drj = dojox.rpc.JsonRest;
+				if (false) {
+					drj.registerService(dojox.rpc.Rest("/slite/game/qtask", true), "rosebud"); 
+					ids = ["rosebud/1", "rosebud/2", "rosebud/3"];
+					for (i in ids) {
+						var sid = drj.getServiceAndId(ids[i]);
+						console.info(drj.byId(sid.service, sid.id));
+					}
+				} else {
+					var jrs = dojox.data.JsonRestStore;
+					drj.registerService(dojox.rpc.Rest("/slite/game/task", true), "task"); 
+					ddj = {
+						qtask: new jrs({target: "/slite/game/qtask", service: dojox.rpc.Rest("/slite/game/qtask", true)}),
+						task: new jrs({target: "/slite/game/task", service: dojox.rpc.Rest("/slite/game/task", true)}),
+						story: new jrs({target: "/slite/game/story", service: dojox.rpc.Rest("/slite/game/story", true)})
+					};
+					ddj.qtask.fetchItemByIdentity({identity: "1"});
+					ddj.qtask.fetchItemByIdentity({identity: "2"});
+					ddj.qtask.fetchItemByIdentity({identity: "3"});
+					// ddj.rosebud.fetchItemByIdentity({identity: "/quagmire/1"});
+				};
+			});
+		</script>
+	</body>
+</html>

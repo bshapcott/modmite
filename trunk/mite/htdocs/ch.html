@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<link id="themeStyles" rel="stylesheet" href="/js/dojo-release-1.3.0/dijit/themes/nihilo/nihilo.css">
+	<style type="text/css">
+		@import "/js/dojo-release-1.3.0/dojo/resources/dojo.css";
+	</style>
+	<script type="text/javascript" src="/js/dojo-release-1.3.0/dojo/dojo.js" djConfig="debugAtAllCosts:true, isDebug: true, parseOnLoad: false, dojoIframeHistoryUrl:'/js/dojo-release-1.2.0-src/dojo/resources/iframe_history.html'">
+	</script>
+	<script type="text/javascript" src="cx.js"></script>
+	<script type="text/javascript" src="ui.js"></script>
+</head>
+<body class="nihilo">
+	<p id="loading">Loading . . .</p>
+	<script type="text/javascript">
+		dojo.require("dijit.layout.BorderContainer");
+		dojo.require("dijit.layout.ContentPane");
+		dojo.require("dijit.form.Button");
+		dojo.require("dijit.form.CheckBox");
+		dojo.require("dijit.form.SimpleTextarea");
+		dojo.require("dijit.Tree");
+		dojo.require("dijit.Menu");
+
+		dojo.addOnLoad( function() {
+
+			// @todo - UI construction from data source
+			ui.make_the_ui(cx);
+
+			//__________________________________________________________________________
+			// - quick & dirty scratch test
+			function test(data, next) {
+				var n = next;
+				var input = dijit.byId("input");
+				input.attr("value", data);
+				cx.send_data(data, 'application/json', function (xhr) {
+					if (xhr.readyState == 4) {
+						var output = dijit.byId("output");
+						output.attr("value", xhr.responseText);
+						cx.eval_o(xhr.responseText);
+						if (n) {
+							n();
+						}
+					}
+				});
+			}
+			function test3() {test("/mite/game/qtask?story=1");}
+			function test2() {test("/mite/game/task", test3);}
+			test("/mite/game", test2);
+		}); // dojo.addOnLoad	
+	</script>
+</body>
+</html>

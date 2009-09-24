@@ -1,0 +1,8 @@
+div.task-view {clear: both; background-color: grey}
+div.task-id {float: left; background-color: wheat; border: 3px ridge grey; width: 3%; padding: 4px; margin: 4px}
+div.task-title {float:left; background-color: wheat; border: 3px ridge grey; width: 15%; padding: 4px; margin: 4px}
+div.task-story {float: left; background-color: wheat; border: 3px ridge grey; width: 3%; padding: 4px; margin: 4px}
+div.task-timestamp {float: left; background-color: wheat; border: 3px ridge grey; width: 15%; padding: 4px; margin: 4px}
+div.task-url {float: left; background-color: wheat; border: 3px ridge grey; width: 15%; padding: 4px; margin: 4px}
+div.task-content {float: left; background-color: wheat; border: 3px ridge grey; width: 55%; padding: 4px; margin: 4px}
+div.task-estimate {float: right; background-color: wheat; border: 3px ridge grey; padding: 4px; margin: 4px}

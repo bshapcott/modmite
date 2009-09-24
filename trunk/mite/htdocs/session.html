@@ -1,0 +1,27 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<link id="themeStyles" rel="stylesheet" href="/js/dojo-release-1.3.1-src/dijit/themes/nihilo/nihilo.css">
+	<style type="text/css">
+		@import "/js/dojo-release-1.3.1-src/dojo/resources/dojo.css";
+	</style>
+    <!--  isDebug: true, -->
+	<script type="text/javascript" src="/js/dojo-release-1.3.1-src/dojo/dojo.js" djConfig="debugAtAllCosts:true, isDebug: true, parseOnLoad: false, dojoIframeHistoryUrl:'/js/dojo-release-1.3.1-src/dojo/resources/iframe_history.html'">
+	</script>
+  <script type="text/javascript" src="ch.js"></script>
+  <script type="text/javascript" src="cx.js"></script>
+  <script type="text/javascript" src="session.js"></script>
+  </head>
+<body class="nihilo">
+	<p id="loading">Loading . . .</p>
+  <div id="contentNode"></div>
+	<script type="text/javascript">
+
+		dojo.addOnLoad( function() {
+    
+    session.get();
+
+}); // dojo.addOnLoad	
+	</script>
+</body>
+</html>
