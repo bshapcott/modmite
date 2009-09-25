@@ -1,0 +1,29 @@
+#summary Build Instructions.
+
+= Introduction =
+
+modmite is currently pre-release and in active development.
+
+The build process currently requires several manual steps.
+
+Development in performed on Windows Vista using Visual Studio C++ 2008 Express.
+
+Some trial builds have been performed on CentOS Linux, because eventually this project will be cross-platform.
+
+= Details =
+
+Build steps:
+  * Get Microsoft Visual Studio C++ 2008 and install.
+  * Get Apache 2.2.
+    * If you get a source distribution, build and install.
+    * C:\Apache22 is assumed as the install folder for the remainder of these instructions.
+  * Checkout modmite with subversion to a local folder, such as C:\Project.
+    * C:\Project is assumed as the checkout folder for the remainder of these instructions.
+  * Get yajl.  Unzip to C:\Project\thirdparty\yajl.
+  * Get sqlite almalgamation.  Unzip to C:\Project\thirdparty\sqlite.
+    * Follow the instructions in BUIDLING.win32.
+  * Open C:\Project\mite\mite.sln.
+    * Build the DEBUG project.
+    * I haven't checked all the settings in the RELEASE project.
+
+The build process will become more automated going forward.
