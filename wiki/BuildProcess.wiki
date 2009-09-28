@@ -1,3 +1,5 @@
+#summary Instructions for manually building modmite.
+
 modmite is pre-release and in active development.
 
 The build process requires several manual steps.
