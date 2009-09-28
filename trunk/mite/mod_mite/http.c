@@ -189,7 +189,7 @@ static void http_cookie_set(Transaction *xn) {
 /// @param r - HTTP reqest record
 static int http_handler(request_rec* r) {
 	Transaction *xn;
-	if ( !r->handler || strcmp(r->handler, "mite") ) {
+	if ( !r->handler || strcmp(r->handler, "mite_module") ) {
       return DECLINED;
    }
    if (r->method_number != M_POST && r->method_number != M_GET) {
