@@ -24,13 +24,11 @@ Transaction *db_transaction_new(request_rec *r) {
   Transaction *xn = (Transaction *)apr_palloc(r->pool, sizeof(Transaction));
   xn->request = r;
   xn->level = 0;
-  xn->session = "0";
   xn->statements =
     apr_array_make(xn->request->pool, 12, sizeof(sqlite3_stmt *));
   xn->scratch = xn->parm = (char *)apr_palloc(r->pool, 256);
   // todo: *xn->scratch++ = '$';
   *xn->scratch = '$';
-  xn->rowid = 0;
   xn->parameters = apr_table_make(xn->request->pool, 12);
   xn->path = apr_array_make(r->pool, 3, sizeof(char *));
   xn->ocb = &json_ocb;
@@ -40,7 +38,7 @@ Transaction *db_transaction_new(request_rec *r) {
     xn->ocb = &xml_ocb;
   }
   xn->synthetic = 0;
-  xn->db_count = xn->sql_count = xn->stmt_count = 0;
+  xn->sql_count = xn->stmt_count = 0;
   xn->data = NULL;
   xn->comment = NULL;
   return xn;
@@ -56,7 +54,6 @@ void db_start(Transaction *xn) {
   };
   // \todo - fstat first and fail if does not exist!
   // \todo - db pool
-  xn->db_count++;
   xn->sql_count = xn->stmt_count = 0;
   rc = sqlite3_open(&xn->scratch[1], &xn->db);
   if (xn->scratch[1]) {
@@ -136,7 +133,6 @@ void db_bind_end(Transaction *xn) {
   }
   for (i = 0; i < xn->statements->nelts; i++) {
     sqlite3_stmt *statement = ((sqlite3_stmt **)xn->statements->elts)[i];
-    xn->rowid = 0;
     row_count = 0;
     ++xn->stmt_count;
     (*xn->ocb->stmt_start)(xn);
@@ -175,7 +171,6 @@ void db_bind_end(Transaction *xn) {
       }
       (*xn->ocb->row_end)(xn, !h);
     }
-    xn->rowid = sqlite3_last_insert_rowid(xn->db);
     (*xn->ocb->stmt_end)(xn);
   }
   return;
@@ -207,7 +202,7 @@ void db_col_val(Transaction *xn, char const *val, size_t len) {
     /// @todo - is the duplication necessary? maybe text is preserved
     ///         in the parse buffer
     /// @todo - for positional binds, use table info to look up or
-    ///         binding positions for stored procs
+    ///         binding positions for stored SQL
     apr_table_addn(xn->parameters,
                    apr_pstrdup(xn->request->pool, &xn->scratch[1]),
                    apr_pstrmemdup(xn->request->pool, val, len));

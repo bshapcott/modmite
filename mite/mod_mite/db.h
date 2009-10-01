@@ -109,11 +109,6 @@ struct Transaction {
   apr_array_header_t *statements;
   /// \todo dox
   const char *name;
-  /// - session indentifier, either from cookie or URL query parameter
-  char *session;
-  /// - last inserted row, for chaining, should be represented as a
-  ///   parameter in the same manner as session cookie and query parameters
-  sqlite3_int64 rowid;
   /// - transaction parameters, derived from URL query parameters, cookie
   ///   (session only), or last inserted rowid
   apr_table_t *parameters;
@@ -131,8 +126,6 @@ struct Transaction {
   char *comment;
   /// - SQL statement being executed was generated programatically
   char synthetic;
-  /// - number of databases in transaction
-  int db_count;
   /// numbuer of SQL commands in database operation
   int sql_count;
   /// - number of statements to execute in SQL command

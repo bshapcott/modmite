@@ -23,7 +23,7 @@ enum {
    root,
    /// - database level
    db,
-   /// - SQL, identified by stored procedure, table or view name
+   /// - SQL, identified by stored SQL, table or view name
    sql,
    /// - array is open (handling depends on next token)
    array,

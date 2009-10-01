@@ -78,103 +78,103 @@
 				SourceControlFiles="false"
 				>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\AdapterRegistry.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\AdapterRegistry.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\back.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\back.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\behavior.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\behavior.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\colors.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\colors.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\cookie.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\cookie.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\currency.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\currency.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\date.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\date.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\DeferredList.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\DeferredList.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\dojo.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\dojo.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\fx.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\fx.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\gears.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\gears.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\html.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\html.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\i18n.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\i18n.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\jaxer.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\jaxer.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\NodeList-fx.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\NodeList-fx.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\NodeList-html.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\NodeList-html.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\number.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\number.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\OpenAjax.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\OpenAjax.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\parser.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\parser.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\regexp.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\regexp.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\robot.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\robot.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\robotx.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\robotx.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\string.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\string.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\tests.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\tests.js"
 					>
 				</File>
 				<Filter
@@ -182,11 +182,11 @@
 					SourceControlFiles="false"
 					>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\data\ItemFileReadStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\data\ItemFileReadStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\data\ItemFileWriteStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\data\ItemFileWriteStore.js"
 						>
 					</File>
 					<Filter
@@ -194,23 +194,23 @@
 						SourceControlFiles="false"
 						>
 						<File
-							RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\data\api\Identity.js"
+							RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\data\api\Identity.js"
 							>
 						</File>
 						<File
-							RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\data\api\Notification.js"
+							RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\data\api\Notification.js"
 							>
 						</File>
 						<File
-							RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\data\api\Read.js"
+							RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\data\api\Read.js"
 							>
 						</File>
 						<File
-							RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\data\api\Request.js"
+							RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\data\api\Request.js"
 							>
 						</File>
 						<File
-							RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\data\api\Write.js"
+							RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\data\api\Write.js"
 							>
 						</File>
 					</Filter>
@@ -219,15 +219,15 @@
 						SourceControlFiles="false"
 						>
 						<File
-							RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\data\util\filter.js"
+							RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\data\util\filter.js"
 							>
 						</File>
 						<File
-							RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\data\util\simpleFetch.js"
+							RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\data\util\simpleFetch.js"
 							>
 						</File>
 						<File
-							RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\data\util\sorter.js"
+							RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\data\util\sorter.js"
 							>
 						</File>
 					</Filter>
@@ -237,63 +237,63 @@
 					SourceControlFiles="false"
 					>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\array.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\array.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\browser.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\browser.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\Color.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\Color.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\connect.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\connect.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\declare.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\declare.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\Deferred.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\Deferred.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\event.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\event.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\fx.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\fx.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\html.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\html.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\json.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\json.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\lang.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\lang.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\NodeList.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\NodeList.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\query.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\query.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\window.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\window.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojo\_base\xhr.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojo\_base\xhr.js"
 						>
 					</File>
 					<Filter
@@ -301,31 +301,31 @@
 						SourceControlFiles="false"
 						>
 						<File
-							RelativePath=".\js\dojo-release-1.2.0-src\dojo\_base\_loader\bootstrap.js"
+							RelativePath=".\js\dojo-release-1.3.2-src\dojo\_base\_loader\bootstrap.js"
 							>
 						</File>
 						<File
-							RelativePath=".\js\dojo-release-1.2.0-src\dojo\_base\_loader\hostenv_browser.js"
+							RelativePath=".\js\dojo-release-1.3.2-src\dojo\_base\_loader\hostenv_browser.js"
 							>
 						</File>
 						<File
-							RelativePath=".\js\dojo-release-1.2.0-src\dojo\_base\_loader\hostenv_rhino.js"
+							RelativePath=".\js\dojo-release-1.3.2-src\dojo\_base\_loader\hostenv_rhino.js"
 							>
 						</File>
 						<File
-							RelativePath=".\js\dojo-release-1.2.0-src\dojo\_base\_loader\hostenv_spidermonkey.js"
+							RelativePath=".\js\dojo-release-1.3.2-src\dojo\_base\_loader\hostenv_spidermonkey.js"
 							>
 						</File>
 						<File
-							RelativePath=".\js\dojo-release-1.2.0-src\dojo\_base\_loader\loader.js"
+							RelativePath=".\js\dojo-release-1.3.2-src\dojo\_base\_loader\loader.js"
 							>
 						</File>
 						<File
-							RelativePath=".\js\dojo-release-1.2.0-src\dojo\_base\_loader\loader_debug.js"
+							RelativePath=".\js\dojo-release-1.3.2-src\dojo\_base\_loader\loader_debug.js"
 							>
 						</File>
 						<File
-							RelativePath=".\js\dojo-release-1.2.0-src\dojo\_base\_loader\loader_xd.js"
+							RelativePath=".\js\dojo-release-1.3.2-src\dojo\_base\_loader\loader_xd.js"
 							>
 						</File>
 					</Filter>
@@ -336,87 +336,87 @@
 				SourceControlFiles="false"
 				>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\_base.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\_base.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\_Calendar.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\_Calendar.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\_Container.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\_Container.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\_Templated.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\_Templated.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\_TimePicker.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\_TimePicker.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\_Widget.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\_Widget.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\ColorPalette.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\ColorPalette.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\Declaration.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\Declaration.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\Dialog.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\Dialog.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\dijit-all.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\dijit-all.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\dijit.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\dijit.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\Editor.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\Editor.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\InlineEditBox.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\InlineEditBox.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\Menu.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\Menu.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\ProgressBar.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\ProgressBar.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\robot.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\robot.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\robotx.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\robotx.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\TitlePane.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\TitlePane.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\Toolbar.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\Toolbar.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\Tooltip.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\Tooltip.js"
 					>
 				</File>
 				<File
-					RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\Tree.js"
+					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\Tree.js"
 					>
 				</File>
 				<Filter
@@ -424,39 +424,39 @@
 					SourceControlFiles="false"
 					>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\layout\_LayoutWidget.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\layout\_LayoutWidget.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\layout\AccordionContainer.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\layout\AccordionContainer.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\layout\BorderContainer.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\layout\BorderContainer.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\layout\ContentPane.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\layout\ContentPane.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\layout\LayoutContainer.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\layout\LayoutContainer.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\layout\LinkPane.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\layout\LinkPane.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\layout\SplitContainer.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\layout\SplitContainer.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\layout\StackContainer.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\layout\StackContainer.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\layout\TabContainer.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\layout\TabContainer.js"
 						>
 					</File>
 				</Filter>
@@ -465,79 +465,79 @@
 					SourceControlFiles="false"
 					>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\_DateTimeTextBox.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\_DateTimeTextBox.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\_FormWidget.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\_FormWidget.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\_Spinner.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\_Spinner.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\Button.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\Button.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\CheckBox.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\CheckBox.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\ComboBox.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\ComboBox.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\CurrencyTextBox.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\CurrencyTextBox.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\DateTextBox.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\DateTextBox.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\FilteringSelect.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\FilteringSelect.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\Form.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\Form.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\MultiSelect.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\MultiSelect.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\NumberSpinner.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\NumberSpinner.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\NumberTextBox.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\NumberTextBox.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\SimpleTextarea.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\SimpleTextarea.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\Slider.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\Slider.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\Textarea.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\Textarea.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\TextBox.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\TextBox.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\TimeTextBox.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\TimeTextBox.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dijit\form\ValidationTextBox.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\form\ValidationTextBox.js"
 						>
 					</File>
 				</Filter>
@@ -551,127 +551,127 @@
 					SourceControlFiles="false"
 					>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\AndOrReadStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\AndOrReadStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\AndOrWriteStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\AndOrWriteStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\AtomReadStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\AtomReadStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\ClientFilter.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\ClientFilter.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\CouchDBRestStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\CouchDBRestStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\css.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\css.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\CssClassStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\CssClassStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\CssRuleStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\CssRuleStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\CsvStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\CsvStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\dom.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\dom.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\FileStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\FileStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\FlickrRestStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\FlickrRestStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\FlickrStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\FlickrStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\GoogleFeedStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\GoogleFeedStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\GoogleSearchStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\GoogleSearchStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\HtmlStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\HtmlStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\HtmlTableStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\HtmlTableStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\jsonPathStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\jsonPathStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\JsonRestStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\JsonRestStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\rpc\JsonRPC.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\rpc\JsonRPC.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\KeyValueStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\KeyValueStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\OpmlStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\OpmlStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\PersevereStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\PersevereStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\PicasaStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\PicasaStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\QueryReadStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\QueryReadStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\restListener.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\restListener.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\S3Store.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\S3Store.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\ServiceStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\ServiceStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\SnapLogicStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\SnapLogicStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\WikipediaStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\WikipediaStore.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\data\XmlStore.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\XmlStore.js"
 						>
 					</File>
 				</Filter>
@@ -680,35 +680,35 @@
 					SourceControlFiles="false"
 					>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\rpc\Client.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\rpc\Client.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\rpc\JsonRest.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\rpc\JsonRest.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\rpc\OfflineRest.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\rpc\OfflineRest.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\rpc\ProxiedPath.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\rpc\ProxiedPath.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\rpc\Readme"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\rpc\Readme"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\rpc\Rest.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\rpc\Rest.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\rpc\Service.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\rpc\Service.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\rpc\test.txt"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\rpc\test.txt"
 						>
 					</File>
 				</Filter>
@@ -717,19 +717,19 @@
 					SourceControlFiles="false"
 					>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\json\query.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\json\query.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\json\Readme"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\json\Readme"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\json\ref.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\json\ref.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\json\schema.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\json\schema.js"
 						>
 					</File>
 				</Filter>
@@ -738,71 +738,71 @@
 					SourceControlFiles="false"
 					>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\_EditManager.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\_EditManager.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\_Events.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\_Events.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\_FocusManager.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\_FocusManager.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\_Grid.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\_Grid.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\_Layout.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\_Layout.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\_RowManager.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\_RowManager.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\_RowSelector.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\_RowSelector.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\_Scroller.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\_Scroller.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\_View.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\_View.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\_ViewManager.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\_ViewManager.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\cells.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\cells.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\DataGrid.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\DataGrid.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\DataSelection.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\DataSelection.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\Grid.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\Grid.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\Selection.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\Selection.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\util.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\util.js"
 						>
 					</File>
 					<File
-						RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\VirtualGrid.js"
+						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\VirtualGrid.js"
 						>
 					</File>
 					<Filter
@@ -810,11 +810,11 @@
 						SourceControlFiles="false"
 						>
 						<File
-							RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\compat\Grid.js"
+							RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\compat\Grid.js"
 							>
 						</File>
 						<File
-							RelativePath="..\htdocs\js\dojo-release-1.2.0-src\dojox\grid\compat\VirtualGrid.js"
+							RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\grid\compat\VirtualGrid.js"
 							>
 						</File>
 					</Filter>
@@ -841,6 +841,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\json.html"
+				>
+			</File>
+			<File
 				RelativePath=".\jsonstore.html"
 				>
 			</File>
@@ -854,6 +858,14 @@
 			</File>
 			<File
 				RelativePath=".\scratch.js"
+				>
+			</File>
+			<File
+				RelativePath=".\session.html"
+				>
+			</File>
+			<File
+				RelativePath=".\session.js"
 				>
 			</File>
 			<File
@@ -883,22 +895,6 @@
 		</File>
 		<File
 			RelativePath=".\index.html"
-			>
-		</File>
-		<File
-			RelativePath=".\json.html"
-			>
-		</File>
-		<File
-			RelativePath=".\log.js"
-			>
-		</File>
-		<File
-			RelativePath=".\session.html"
-			>
-		</File>
-		<File
-			RelativePath=".\session.js"
 			>
 		</File>
 		<File

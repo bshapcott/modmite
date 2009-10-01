@@ -31,7 +31,7 @@ void sql_get(Transaction *xn);
 /// - not available in a production environment, and any arbitrary table or
 ///   view may be queried for arbitrary column data
 /// - all access to data in a production environment should be via stored
-///   procedures
+///   SQL
 /// - prepared statements are recorded in Transaction
 /// @param xn - the transaction information associated with the HTTP request
 void sql_synth(Transaction *xn);

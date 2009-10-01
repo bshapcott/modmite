@@ -27,6 +27,7 @@
 #include "apr_tables.h"
 
 #include <string.h>
+#include <stdio.h>
 
 //_____________________________________________________________________________
 static const sqlite3_module module;
@@ -55,7 +56,7 @@ static int xFilter_bind(cursor *c, int idxNum, char const *idxStr,
    int argc, sqlite3_value **argv);
 static int xFilter_foreign(cursor *c, int idxNum, char const *idxStr,
    int argc, sqlite3_value **argv);
-static int xFilter_stored(cursor *c, int idxNum, char const *idxStr,
+static int xFilter_sql(cursor *c, int idxNum, char const *idxStr,
    int argc, sqlite3_value **argv);
 static int xFilter_table(cursor *c, int idxNum, char const *idxStr,
    int argc, sqlite3_value **argv);
@@ -77,9 +78,9 @@ static int xConnect(sqlite3 *db, void *pAux, int argc, char const * const *argv,
        {"foreign", "CREATE TABLE metaforeign (tbl STRING, id INTEGER, seq INTEGER, foreign_tbl STRING,"
         " c_from STRING, c_to STRING, on_update STRING, on_delete STRING, c_match STRING)",
         xFilter_foreign},
-       {"stored", "CREATE TABLE metastored (name STRING, sid INTEGER, cid INTEGER, db STRING,"
+       {"sql", "CREATE TABLE metasql (name STRING, sid INTEGER, cid INTEGER, db STRING,"
         " tbl STRING, origin STRING, col STRING)",
-        xFilter_stored},
+        xFilter_sql},
        {"table", "CREATE TABLE metatable (tbl STRING, cid INTEGER, name STRING, type STRING,"
         " not_null INTEGER, dflt_value STRING, pk STRING)",
         xFilter_table},
@@ -176,8 +177,8 @@ static int xFilter(cursor *c, int idxNum, const char *idxStr,
 ///   way results can be passed in a message without column names, bindings
 ///   can be passed without parameter names (i.e. passed positionally)
 /// - this differs from positional binds per SQL statement, because multiple
-///   statements may be involved in a stored procedure
-/// - a binding set covering the entire (pseudo-) stored procedure is
+///   statements may be involved in a stored SQL
+/// - a binding set covering the entire stored SQL is
 ///   synthesized from the bindings of individual SQL statements in the
 ///   procedure
 /// - each binding is listed ONCE in the order in which it FIRST appears
@@ -238,7 +239,6 @@ static int meta_query(cursor *c, int idxNum, const char *idxStr,
          row = apr_array_make(c->pool, n, sizeof(char *));
          APR_ARRAY_PUSH(c->table, apr_array_header_t *) = row;
          APR_ARRAY_PUSH(row, char const *) = name;
-         // id|seq|table|from|to|on_update|on_delete|match
          for (i = 0; i < n; i++) {
             char const *txt = sqlite3_column_text(stmt[1], i);
             APR_ARRAY_PUSH(row, char const *) = apr_pstrdup(c->pool, txt);
@@ -257,7 +257,7 @@ static int xFilter_foreign(cursor *c, int idxNum, const char *idxStr,
 }
 
 //_____________________________________________________________________________
-static int xFilter_stored(cursor *c, int idxNum, const char *idxStr,
+static int xFilter_sql(cursor *c, int idxNum, const char *idxStr,
    int argc, sqlite3_value **argv)
 {
   sqlite3_stmt *stmt[2];
@@ -414,7 +414,7 @@ static void dtor(void *arg) {
 //_____________________________________________________________________________
 void meta(sqlite3 *db, apr_pool_t *p) {
    static char *m[] = {
-      "DROP TABLE metastored",  "CREATE VIRTUAL TABLE metastored USING meta(stored)",
+      "DROP TABLE metasql",     "CREATE VIRTUAL TABLE metasql USING meta(sql)",
       "DROP TABLE metabinding", "CREATE VIRTUAL TABLE metabinding USING meta(bind)",
       "DROP TABLE metatable",   "CREATE VIRTUAL TABLE metatable USING meta(table)",
       "DROP TABLE metaforeign", "CREATE VIRTUAL TABLE metaforeign USING meta(foreign)",
