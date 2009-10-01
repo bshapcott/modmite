@@ -79,9 +79,6 @@ void url_parse_query(Transaction *xn) {
          char *k, *v;
          k = apr_strtok(token, "=", &v);
          apr_table_addn(xn->parameters, k, v);
-         if (!strcmp("session", k)) {
-            xn->session = v;
-         }
       }
    }
    return;

@@ -149,6 +149,7 @@ static void http_parse_content(Transaction *xn) {
 /// - only the session cookie is parsed out
 /// @todo - alternate handling if cookies disabled on browser, session should
 ///         be taken from the URL, probably as a query parameter
+/// @todo - is this needed now that request vtab is implemented?
 static void http_parse_cookie(Transaction *xn) {
    const char *cookie = apr_table_get(xn->request->headers_in, "Cookie");
    if (cookie) {
@@ -157,10 +158,7 @@ static void http_parse_cookie(Transaction *xn) {
                               " ;", &remaining);
            token; token = apr_strtok(NULL, "; ", &remaining))
       {
-         if (!strncmp("session=", token, 8)) {
-            apr_strtok(token, "=", &xn->session);
-            break;
-         }
+
       }
    }
    return;
@@ -172,14 +170,17 @@ static void http_parse_cookie(Transaction *xn) {
 ///       session hijacking
 /// @todo handle browser disabled cookies use case (maybe client side?)
 /// @todo throttle expires refresh
+/// @todo - should use cookie vtab
 static void http_cookie_set(Transaction *xn) {
-   char *cookie;
+#if 0
+  char *cookie;
    apr_time_t t = apr_time_now() + (apr_time_t)7 * 24 * 60 * 60 * 1000000;
    char *date = (char *)apr_palloc(xn->request->pool, APR_RFC822_DATE_LEN);
    apr_rfc822_date(date, t);
    cookie = apr_pstrcat(xn->request->pool, "session=", xn->session,
                               "; path=/; expires=", date, NULL);
    apr_table_set(xn->request->headers_out, "Set-Cookie", cookie);
+#endif
    return;
 }
 

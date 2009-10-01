@@ -25,7 +25,7 @@ static int xConnect(sqlite3 *db, void *pAux, int argc, const char * const *argv,
   strcat(buf, argv[1]);
   strcat(buf, ".");
   strcat(buf, argv[2]);
-  strcat(buf, " (ones INTEGER, twos INTEGER)");
+  strcat(buf, " (n NULL, i INTEGER, r REAL, t TEXT, x BLOB)");
   rc = sqlite3_declare_vtab(db, buf);
   *ppVTab = (sqlite3_vtab *)sqlite3_malloc(sizeof(sqlite3_vtab));
   (**ppVTab).pModule = &module;
@@ -50,6 +50,7 @@ static int xBestIndex(sqlite3_vtab *pVTab, sqlite3_index_info *info) {
   info->needToFreeIdxStr = 0;
   info->estimatedCost = 1.f;
   for (i = 0; i < info->nConstraint; i++) {
+    info->aConstraintUsage[i].argvIndex = i + 1;
     info->aConstraintUsage[i].omit = 0;
   }
   return SQLITE_OK;
@@ -75,6 +76,8 @@ typedef struct
 {
   sqlite3_vtab_cursor base;
   int row;
+  double floor;
+  double step;
 } cursor;
 
 //_____________________________________________________________________________
@@ -82,6 +85,8 @@ static int xOpen(sqlite3_vtab *pVTab, sqlite3_vtab_cursor **ppCursor)
 {
   cursor *c = (cursor *)sqlite3_malloc(sizeof(cursor));
   c->row = 0;
+  c->floor = .0f;
+  c->step = 1.0f;
   *ppCursor = &c->base;
   return SQLITE_OK;
 }
@@ -97,6 +102,9 @@ static int xFilter(cursor *c, int idxNum, const char *idxStr,
    int argc, sqlite3_value **argv)
 {
   c->row = 0;
+  if (argc > 0) {
+    c->floor = sqlite3_value_double(argv[0]);
+  }
   return SQLITE_OK;
 }
 
@@ -114,7 +122,33 @@ static int xEof(cursor *c) {
 
 //_____________________________________________________________________________
 static int xColumn(cursor *c, sqlite3_context *ctxt, int i) {
-  sqlite3_result_int(ctxt, c->row * (i+1));
+  /// \todo - stack buf
+  char buf[16];
+  char *txt;
+  double v = c->floor + c->step * c->row;
+  switch (i) {
+    case 0:
+      sqlite3_result_null(ctxt);
+      break;
+    case 1:
+      sqlite3_result_int(ctxt, v);
+      break;
+    case 2:
+      sqlite3_result_double(ctxt, v);
+      break;
+    case 3:
+      sprintf(buf, "%f", v);
+      txt = sqlite3_malloc(strlen(buf)+1);
+      strcpy(txt, buf);
+      sqlite3_result_text(ctxt, txt, -1, sqlite3_free);
+      break;
+    case 4:
+      sqlite3_result_blob(ctxt, &v, sizeof(v), NULL);
+      break;
+    default:
+      sqlite3_result_error(ctxt, "too many columns", SQLITE_ERROR);
+      return SQLITE_ERROR;
+  }
   return SQLITE_OK;
 }
 
@@ -195,9 +229,9 @@ static void destructor(void *arg) {
 
 void vtab(sqlite3 *db) {
   char *e;
-  int rc = sqlite3_create_module_v2(db, "vjs", &module, NULL, destructor);
-  rc = sqlite3_exec(db, "DROP TABLE test", NULL, NULL, &e);
-  rc = sqlite3_exec(db, "CREATE VIRTUAL TABLE test USING vtab", NULL, NULL, &e);
+  int rc = sqlite3_create_module_v2(db, "vtab", &module, NULL, destructor);
+  rc = sqlite3_exec(db, "DROP TABLE literal", NULL, NULL, &e);
+  rc = sqlite3_exec(db, "CREATE VIRTUAL TABLE literal USING vtab", NULL, NULL, &e);
   return;
 }
 

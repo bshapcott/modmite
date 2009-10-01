@@ -3,24 +3,9 @@
 // brad at shapcott dot com
 // http://shapcott.com
 //
-// - server connector (cx)
-// - Dojo dependencies in this module NOT ALLOWED
-//
-// - identifier conventions in this module
-//   - identifiers synthesized from the database (e.g. table, view and column
-//     names) are converted as is
-//   - identifiers defined in this module are prefixed with a '$' (although
-//     it is possible to use '$' as a prefix in sqlite identifiers, it is
-//     uncommon because it conflicts with the syntax for binding parameters and
-//     must therefore be quoted)
-//   - identifiers prefixed with '$$' denote fields which may form a cycle
-//     in a data structure, which can be used to inform traversal algorithms
-//     (such as serializers) -- kludgy, but cheaper than cycle detection
-//   - commonly used identifiers are:
-//     - '$s' - "s"ource function that created the object
-//     - '$n' - object's "n"ame
-//     - '$t' - object's "t"ype by constructor name
-//     - '$$p' - object's "p"arent
+// - mite server connector (cx)
+// - vanilla JavaScript ONLY in this module
+// - no JS libraries allowed (Dojo, YUI, etc.)
 
 //_____________________________________________________________________________
 cx = {};
@@ -91,19 +76,6 @@ cx.send_data = function cx_send_data(data, accept, cb) {
 }
 
 //_____________________________________________________________________________
-// - object identifier
-// todo: member func?
-cx.oid = function cx_oid(obj) {
-	if (obj.$n === undefined) {
-		// - fake an id
-		// @todo - ensure this is truly unique in context
-		obj.$n = Math.random().toString(36).substring(2);
-		console.error("~oid: " + obj);
-	}
-	return (obj.$$p ? cx.oid(obj.$$p) + '/' : "") + obj.$n;
-}
-
-//_____________________________________________________________________________
 // - custom serializer breaks cyclic serialization in dojo.toJson
 // todo: prototype func
 cx.toJson = function cx_toJson() {
@@ -117,75 +89,153 @@ cx.toJson = function cx_toJson() {
 	return obj;
 }
 
-//_____________________________________________________________________________
-// - create an object representing a row of the result set
-// - if the object already exists, mix in the result set row
-// @param	db		database object
-// @param	t		SQL query name
-// @param	s		statement index in 'q'
-// @param	r		row in result set representing the object
-cx.map_obj = function cx_map_obj(root, db, t, s, r) {
+//_____________________________________________________________________________'
+cx.find_or_create = function cx_find_or_create(doc, id, type, parent) {
+	var e = doc.getElementById(id);
+	if (!e) {
+		e = document.createElement(type);
+		e.setAttribute("id", id);
+		e.setAttribute("class", type);
+		parent.appendChild(e);
+	}
+	return e;
 }
 
 //_____________________________________________________________________________
-// todo: add db padding
+cx.lookup = function cx_lookup(table, kvp) {
+	var r = [];
+	var tr = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+	for (var i = 0; i < tr.length; i++) {
+		var td = tr[i].getElementsByTagName("td");
+		var f = true;
+		for (var k in kvp) {
+			if (kvp[k] != td[k].innerHTML) {
+				f = false;
+				break;
+			}
+		}
+		if (f) {
+			var s = [];
+			for (var j = 0; j < td.length; j++) {
+				s.push(td[j].innerHTML);
+			}
+			r.push(s);
+		}
+	}
+	return r;
+}
+
+//_____________________________________________________________________________
+cx.microformat = function cx_microformat(qid, table, db, sql, stmt, rows) {
+	var caption = table.getElementsByTagName("caption");
+	if (caption.length == 0) {
+		caption = document.createElement("caption");
+		caption.innerHTML = db + " " + sql + " " + stmt;
+		table.insertBefore(caption, table.firstChild);
+	}
+	var tbody = table.getElementsByTagName("tbody");
+	if (tbody.length == 0) {
+		tbody = document.createElement("tbody");
+		table.appendChild(tbody);
+	} else {
+		tbody = tbody[0];
+	}
+	for (var row in rows) {
+		var r = rows[row];
+		var tr = document.createElement("tr");
+		tbody.appendChild(tr);
+		for (var c in r) {
+			var td = document.createElement("td");
+			td.innerHTML = r[c];
+			tr.appendChild(td);
+		}
+	} // row
+	return;
+}
+
+//_____________________________________________________________________________
+cx.metasql = function cx_metasql(qid, table, db, sql, stmt) {
+	var thead = table.getElementsByTagName("thead");
+	if (thead.length > 0) {
+		return;
+	}
+	var meta = /^meta/.test(sql) ? sql : "meta" + sql;
+	thead = document.createElement("thead");
+	table.appendChild(thead);
+	var metasql = document.getElementById(db + "." + meta + "." + qid + "." + 1);
+	if (!metasql) {
+		return;
+	}
+	var metatable = document.getElementById(db + "." + meta + "." + qid + "." + 2);
+	var mtl = metatable.getElementsByTagName("tbody")[0].getElementsByTagName("tr")[0].getElementsByTagName("td").length;
+	var tfoot;
+	if (metatable) {
+		tfoot = document.createElement("tfoot");
+		table.appendChild(tfoot);
+	}
+	var thr = [];
+	var tfr = [];
+	var s = this.lookup(metasql, {0: sql, 1: stmt});
+	for (var i in s) {
+		for (var j in s[i]) {
+			if (!thr[j]) {
+				thr[j] = document.createElement("tr");
+				thead.appendChild(thr[j]);
+			}
+			var td = document.createElement("td");
+			td.setAttribute("class", "meta");
+			td.innerHTML = s[i][j];
+			thr[j].appendChild(td);
+		}
+		var t = this.lookup(metatable, {0: s[i][4], 2: s[i][5]});
+		var len = t.length > 0 ? t[0].length : mtl;
+		for (var j = 0; j < len; j++) {
+			if (!tfr[j]) {
+				tfr[j] = document.createElement("tr");
+				tfoot.appendChild(tfr[j]);
+			}
+			var td = document.createElement("td");
+			td.setAttribute("class", "meta");
+			td.innerHTML = t.length > 0 ? t[0][j] : "";
+			tfr[j].appendChild(td);
+		}
+	}
+	return;
+}
+
+//_____________________________________________________________________________
+// @todo - notifications for data changes
+// - DIV can be ground zero for connecting to other subsystems
 cx.eval_o = function cx_eval_o(data, root) {
 	try {
 		var it = eval('(' + data + ')');
 	} catch (e) {
-		console.warn(e + data);
+		console.warn("cx_eval_o");
+		console.warn(e);
 		return;
 	}
-	for (var dpad in it) {for (var db in it[dpad]) {
-		console.debug("[" + dpad + "][" + db + "]");
-		var div = document.createElement("div");
-		div.setAttribute("class", db);
-		document.body.appendChild(div);
-		for (var pad in it[dpad][db]) {for (var sql in it[dpad][db][pad]) {
-			console.debug("[" + dpad + "][" + db + "][" + pad + "][" + sql + "]");
-			for (var stmt in it[dpad][db][pad][sql]) {
-				console.debug("[" + dpad + "][" + db + "][" + pad + "][" + sql + "][" + stmt + "]");
-				var table = document.createElement("table");
-				div.appendChild(table);
-				for (var row in it[dpad][db][pad][sql][stmt]) {
-					console.debug("[" + dpad + "][" + db + "][" + pad + "][" + sql + "][" + stmt + "][" + row + "]");
-					var r = it[dpad][db][pad][sql][stmt][row];
-					var tr = document.createElement("tr");
-					table.appendChild(tr);
-					for (var c in r) {
-						var span = document.createElement("span");
-						span.innerHTML = r[c];
-						var td = document.createElement("td");
-						td.appendChild(span);
-						tr.appendChild(td);
+	// - convert the input data into microformat
+	for (var pass = 0; pass < 2; pass++) {
+		for (var dpad in it) {for (var db in it[dpad]) {
+			for (var pad in it[dpad][db]) {for (var sql in it[dpad][db][pad]) {
+				var qid = it[dpad][db][pad][sql][0][0]['qid'];
+				var div = this.find_or_create(document, qid, "div", document.body);
+				for (var stmt in it[dpad][db][pad][sql]) {
+					var table = this.find_or_create(document, db + "." + sql + "." + qid + "." + stmt,
+						"table", div);
+					switch (pass) {
+					case 0:
+						this.microformat(qid, table, db, sql, stmt, it[dpad][db][pad][sql][stmt]);
+						break;
+					case 1:
+						this.metasql(qid, table, db, sql, stmt);
+						break;
 					}
-				} // row
-			} // stmt
-		}} // pad + sql
-	}} // pad + db
-	this.delta();
+				} // stmt
+			}} // pad + sql
+		}} // pad + db
+	} // pass
 	return;
 }
 
-//_____________________________________________________________________________
-cx.query = function cx_query(q) {
-	var f = Math.random().toString(36).substring(2);
-	// @debug - non-portable
-	q.$s = arguments.callee.name;
-	root = cx.prod(cx.$root, f, function() {
-		return {
-			$container: true,
-			$n: f
-		};
-	});
-	cx.prod(root, '$query', function() {return q;});
-	// @todo - implement non-Dojo toJson
-	cx.send_data(dojo.toJson(q), 'application/json', function(xhr) {
-		if (xhr.readyState == 4) {
-			cx.eval_o(xhr.responseText, root);
-		}
-	});
-	return;
-}
-
-// EOF
+//_________________________________________________________________________ EOF

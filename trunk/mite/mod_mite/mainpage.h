@@ -14,7 +14,7 @@
 ///
 /// This is an overview of the mite (MIcroliTE) Apache module, which
 /// accepts commands as JSON, XML, URL or raw SQL (the latter in
-/// development mode only), interprets the commands as stored procedures
+/// development mode only), interprets the commands as stored SQL
 /// to execute against a SQLITE3 database, and returns the results as
 /// JSON or XML.
 ///
@@ -26,7 +26,7 @@
 /// database.
 ///
 /// In the future support may be provided for using JavaScript in triggers
-/// and stored procedures, inverting the typical server stack by placing
+/// and stored SQL, inverting the typical server stack by placing
 /// scripting 'behind' the database.  In this way a scripting facility
 /// needs only be involved for features which benefit from or require
 /// server side processing, while otherwise retaining direct access to
@@ -39,7 +39,7 @@
 /// many types of web applications).
 ///
 /// A second goal is to allow applications to be contained within a single
-/// SQLITE database, including any stored procedures and scripts.  In this way
+/// SQLITE database, including any stored SQL and scripts.  In this way
 /// complete applications can be deployed to servers and migrate between them,
 /// and perhaps to RIA-enabled clients.
 ///
@@ -53,11 +53,11 @@
 ///
 /// The basic form of input is to identify a table or view by name, or a
 /// set of SQL stored in the database using the name as a key, and use the
-/// remaining input as bind parameters to execute the stored procedures.
+/// remaining input as bind parameters to execute the stored SQL.
 /// That is, input is essentially one or more simple commands with parameters
 /// that are converted to SQL commands using a basic mapping.
 ///
-/// Input is mapped directly to stored procedures through 'db_X' functions.
+/// Input is mapped directly to stored SQL through 'db_X' functions.
 /// There is no intermediate representation.
 ///
 /// Result rows (if any) are output as JSON or XML.
@@ -77,15 +77,15 @@
 /// db.h db.cpp
 ///
 /// SQLITE3 database operations.  SQL is either fetched from the database
-/// itself as a sort of lightweight stored procedure (SQLITE3 does not
+/// itself as a sort of lightweight stored 'procedure' (SQLITE3 does not
 /// actually support full stored procedures), or synthesized when the input
 /// refers directly to a table or view.
 ///
-/// The input parser calls the 'db_X' to populate the stored procedures,
+/// The input parser calls the 'db_X' to populate the stored SQL,
 /// which are executed on the fly, and the results used to generate output
 /// through an output_callbacks struct in the Transaction.
 ///
-/// In a production module the database connections and stored procedures
+/// In a production module the database connections and stored SQL
 /// must be pooled and shared between HTTP requests threads for performance.
 /// This is not yet implemented.
 ///
@@ -96,9 +96,9 @@
 /// builds only.
 ///
 /// As raw SQL processing is also absent from production builds, the
-/// only database access permitted is through the psuedo-stored procedures
+/// only database access permitted is through the stored SQL
 /// through JSON, XML or URL commands.  In addition, an access control
-/// system for stored procedures is planned.
+/// system for stored SQL is planned.
 ///
 /// @section json_sec Read and write JSON
 ///
@@ -110,7 +110,7 @@
 /// (note that any parser used by this module must be progressive, as the input
 /// buffer is processed in parts).  The input functions are based on yajl
 /// callbacks (i.e. yajl is to JSON as SAX is to XML).  The parsing semantics
-/// directly map to stored procedure execution via 'db_X' functions.
+/// directly map to stored SQL execution via 'db_X' functions.
 ///
 /// The module also contains the output functions used to populate an
 /// output_callbacks struct.
@@ -124,7 +124,7 @@
 ///
 /// The input is handled by xpat, the XML parser included with Apache.  The input
 /// functions are based on xpat callbacks, similar to SAX.  The parsing semantics
-/// directly map to stored procedure execution via 'db_X' functions.
+/// directly map to stored SQL execution via 'db_X' functions.
 ///
 /// The module also contains the output functions used to populate an
 /// output_callbacks struct.
@@ -138,8 +138,8 @@
 ///
 /// Simple commands may be represented as a URL.  Only the portion of the URL
 /// following that which identifies the handler is used.  The path portion
-/// identifies the table, view or stored procedure, and the query parameters
-/// are used as the bind parameters for the SQL stored procedures.
+/// identifies the table, view or stored SQL, and the query parameters
+/// are used as the bind parameters for the SQL stored SQL.
 ///
 /// The final part of the path may also be interpreted as a primary key
 /// in some circumstances.

@@ -168,10 +168,22 @@ CREATE TABLE query (
 	stmt 'application/x-sql',
 	created DATE DEFAULT (CURRENT_TIMESTAMP),
 	updated DATE DEFAULT (CURRENT_TIMESTAMP) );
-	
+
+-- - metadata for the 'qtask' stored SQL
+INSERT INTO query (name, stmt)
+	VALUES ('metaqtask',
+	"SELECT i AS qid FROM literal WHERE i=$qid;
+	 SELECT * FROM metasql WHERE name='metaqtask' OR name='qtask';
+	 SELECT * FROM metatable WHERE tbl IN ('metasql', 'metabinding', 'metatable', 'task', 'story');
+	 SELECT * FROM metabinding WHERE name='metaqtask' OR name='qtask';");
+
+-- - stored SQL
+-- - in a production server, this is the only SQL that can be executed against
+--   the database
 INSERT INTO query (name, stmt)
 	VALUES ('qtask',
-	"SELECT id, title, content, 'task' AS type FROM task WHERE story=$story;
+	"SELECT i AS qid FROM literal WHERE i=$qid;
+	 SELECT id, title, content, 'task' AS type FROM task WHERE story=$story;
 	 SELECT id, title, content, 'story' AS type FROM story WHERE id=$story;
 	 SELECT story.id AS story, task.id AS task FROM story, task
 		WHERE story.id = task.story AND story.id = $story");
