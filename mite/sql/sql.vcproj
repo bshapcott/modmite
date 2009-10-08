@@ -63,7 +63,7 @@
 	</References>
 	<Files>
 		<File
-			RelativePath=".\agile.sql"
+			RelativePath=".\game.sql"
 			>
 		</File>
 	</Files>

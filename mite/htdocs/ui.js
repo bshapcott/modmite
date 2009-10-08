@@ -8,7 +8,7 @@
 // - also demonstrates creating Dojo widjets programmatically
 // - Dojo dependencies in this module ALLOWED
 
-if (!cx) {throw new Error("cx.js must be loaded BEFORE ui.js");}
+if (!mite) {throw new Error("mite.js must be loaded BEFORE ui.js");}
 
 //_____________________________________________________________________________
 ui = {};
@@ -24,7 +24,7 @@ ui.send_output = function() {
 	} else if (dojo.byId('oxml').checked) {
 		accept = 'application/xml';
 	}
-	cx.send_data(input.value, accept,
+	mite.send_data(input.value, accept,
 		function (xhr) {
 			if (xhr.readyState == 4) {
 				output.value = xhr.responseText;
@@ -183,7 +183,7 @@ ui.make_the_ui = function(m) {
 		iconClass: "dijitEditorIcon dijitEditorIconCopy",
 		onClick: function (e) {
 			output = dojo.byId("output");
-			cx.eval_o(output.value);
+			mite.eval_o(output.value);
 		},
 		label: "EVAL"
 	});

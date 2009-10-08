@@ -8,7 +8,7 @@
 // - that is, there it has no Dojo widget, and represents a blank page
 //   on which widgets may be placed
 
-if (!cx) {throw new Error("cx.js must be loaded BEFORE session.js");}
+if (!mite) {throw new Error("mite.js must be loaded BEFORE session.js");}
 
 //_____________________________________________________________________________
 session = {};
@@ -29,7 +29,7 @@ session.evaluate = function session_evaluate(expr) {
 session.get = function session_get() {
 	// \todo actual session identifier
 	var me = this;
-	cx.send_data('/mite/game/qtask?story=1', 'application/xml',
+	mite.send_data('/mite/game/qtask?story=1', 'application/xml',
 		function (xhr) {
 			if (xhr.readyState == 4) {
 				me.responseText = xhr.responseText;

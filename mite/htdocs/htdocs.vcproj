@@ -898,15 +898,15 @@
 			>
 		</File>
 		<File
-			RelativePath=".\cx.js"
-			>
-		</File>
-		<File
 			RelativePath=".\httpd.conf"
 			>
 		</File>
 		<File
 			RelativePath=".\index.html"
+			>
+		</File>
+		<File
+			RelativePath=".\mite.js"
 			>
 		</File>
 		<File
