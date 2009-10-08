@@ -47,10 +47,6 @@ typedef struct output_callbacks {
   void (*root_start)(Transaction *xn, const char *loc);
   /// - end of the entire transaction
   void (*root_end)(Transaction *xn);
-  /// - start metadata processing
-  void (*meta_start)(Transaction *xn);
-  /// - end metadata processing
-  void (*meta_end)(Transaction *xn);
   /// - start processing a named database
   void (*db_start)(Transaction *xn, const char *dbn);
   /// - end database processing

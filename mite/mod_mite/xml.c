@@ -149,24 +149,6 @@ static void xml_root_end(Transaction *xn) {
 }
 
 //____________________________________________________________________________
-/// - start output of database metadata
-/// - outputs a 'meta' element to enclose the database metadata
-/// @param xn - the transaction information associated with the HTTP request
-static void xml_meta_start(Transaction *xn) {
-   ap_rputs("<meta>", xn->request);
-   return;
-}
-
-//____________________________________________________________________________
-/// - completes output of database metadata
-/// - closes the 'meta' element
-/// @param xn - the transaction information associated with the HTTP request
-static void xml_meta_end(Transaction *xn) {
-   ap_rputs("</meta>", xn->request);
-   return;
-}
-
-//____________________________________________________________________________
 /// - start processing SQL for a particular database
 /// - key is the name of the database, which is the database file's basename
 ///   (the filename with path and extension removed)
@@ -318,7 +300,6 @@ static void xml_error(Transaction *xn, char const *n) {
 //____________________________________________________________________________
 output_callbacks xml_ocb = {
    xml_root_start, xml_root_end,
-   xml_meta_start, xml_meta_end,
    xml_db_start, xml_db_end, xml_sql_start, xml_sql_end,
    xml_stmt_start, xml_stmt_end, xml_row_start, xml_row_end,
    xml_column, xml_col_change, xml_text, xml_comment, xml_error};

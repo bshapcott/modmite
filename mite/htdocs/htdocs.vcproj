@@ -825,59 +825,71 @@
 			Name="etc"
 			>
 			<File
-				RelativePath=".\anim.html"
+				RelativePath=".\etc\anim.html"
 				>
 			</File>
 			<File
-				RelativePath=".\anim.js"
+				RelativePath=".\etc\anim.js"
 				>
 			</File>
 			<File
-				RelativePath=".\countries.json"
+				RelativePath=".\etc\countries.json"
 				>
 			</File>
 			<File
-				RelativePath=".\itemstore.html"
+				RelativePath=".\etc\itemstore.html"
 				>
 			</File>
 			<File
-				RelativePath=".\json.html"
+				RelativePath=".\etc\json.html"
 				>
 			</File>
 			<File
-				RelativePath=".\jsonstore.html"
+				RelativePath=".\etc\jsonstore.html"
 				>
 			</File>
 			<File
-				RelativePath=".\junkyard.js"
+				RelativePath=".\etc\junkyard.js"
 				>
 			</File>
 			<File
-				RelativePath=".\scratch.html"
+				RelativePath=".\etc\map.html"
 				>
 			</File>
 			<File
-				RelativePath=".\scratch.js"
+				RelativePath=".\etc\scratch.html"
 				>
 			</File>
 			<File
-				RelativePath=".\session.html"
+				RelativePath=".\etc\scratch.js"
 				>
 			</File>
 			<File
-				RelativePath=".\session.js"
+				RelativePath=".\etc\session.html"
 				>
 			</File>
 			<File
-				RelativePath=".\xhr.css"
+				RelativePath=".\etc\session.js"
 				>
 			</File>
 			<File
-				RelativePath=".\xhr.html"
+				RelativePath=".\etc\tileset.gif"
 				>
 			</File>
 			<File
-				RelativePath=".\xhr.js"
+				RelativePath=".\etc\tileset.png"
+				>
+			</File>
+			<File
+				RelativePath=".\etc\xhr.css"
+				>
+			</File>
+			<File
+				RelativePath=".\etc\xhr.html"
+				>
+			</File>
+			<File
+				RelativePath=".\etc\xhr.js"
 				>
 			</File>
 		</Filter>

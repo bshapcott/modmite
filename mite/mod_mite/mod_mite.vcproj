@@ -30,7 +30,7 @@
 			<Tool
 				Name="VCCustomBuildTool"
 				Description="Copying .so and .pdb to installation directory . . ."
-				CommandLine="@echo on&#x0D;&#x0A;copy $(TargetPath) \Apache22\modules\&#x0D;&#x0A;copy $(OutDir)\$(TargetName).pdb  \Apache22\modules\&#x0D;&#x0A;@echo off&#x0D;&#x0A;"
+				CommandLine="@echo on&#x0D;&#x0A;copy $(TargetPath) \Apache22\modules\&#x0D;&#x0A;copy $(OutDir)\$(TargetName).pdb  \Apache22\modules\&#x0D;&#x0A;touch \Apache22\modules\$(TargetFileName)&#x0D;&#x0A;touch \Apache22\modules\$(TargetName).pdb&#x0D;&#x0A;@echo off&#x0D;&#x0A;"
 				Outputs="\Apache22\modules\$(TargetFileName);\Apache22\modules\$(TargetName).pdb"
 			/>
 			<Tool

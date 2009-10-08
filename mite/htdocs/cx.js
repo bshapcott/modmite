@@ -3,9 +3,12 @@
 // brad at shapcott dot com
 // http://shapcott.com
 //
+// @todo - rename this to mite.js
 // - mite server connector (cx)
 // - vanilla JavaScript ONLY in this module
-// - no JS libraries allowed (Dojo, YUI, etc.)
+// - no JS libraries allowed (Dojo, Prototype, jQuery, etc.)
+//   - unfortunately that means no CSS Selectors or XPath, because IE doesn't
+//     have a native implementation
 
 //_____________________________________________________________________________
 cx = {};
@@ -102,14 +105,14 @@ cx.find_or_create = function cx_find_or_create(doc, id, type, parent) {
 }
 
 //_____________________________________________________________________________
-cx.lookup = function cx_lookup(table, kvp) {
+cx.lookup = function cx_lookup(table, nvp) {
 	var r = [];
 	var tr = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
 	for (var i = 0; i < tr.length; i++) {
 		var td = tr[i].getElementsByTagName("td");
 		var f = true;
-		for (var k in kvp) {
-			if (kvp[k] != td[k].innerHTML) {
+		for (var k in nvp) {
+			if (nvp[k] != td[k].innerHTML) {
 				f = false;
 				break;
 			}
@@ -123,6 +126,59 @@ cx.lookup = function cx_lookup(table, kvp) {
 		}
 	}
 	return r;
+}
+
+//_____________________________________________________________________________
+cx.tr_lookup = function cx_tr_lookup(table, nvp) {
+	var r = [];
+	var tr = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+	for (var i = 0; i < tr.length; i++) {
+		var td = tr[i].getElementsByTagName("td");
+		var f = true;
+		for (var k in nvp) {
+			if (nvp[k] != td[k].innerHTML) {
+				f = false;
+				break;
+			}
+		}
+		if (f) {
+			r.push(tr[i]);
+		}
+	}
+	return r;
+}
+
+//_____________________________________________________________________________
+cx.pk_lookup = function cx_pk_lookup(table, row) {
+	var tfoot = table.getElementsByTagName("tfoot");
+	if (tfoot.length == 0) {
+		return [];
+	}
+	tfoot = tfoot[0];
+	var thead = table.getElementsByTagName("thead");
+	if (thead.length == 0) {
+		return [];
+	}
+	thead = thead[0];
+	// @todo - don't hardcode row # (from meta<X> column)
+	var nvp;
+	var tdf = tfoot.getElementsByTagName("tr")[6].getElementsByTagName("td");
+	var tdh = thead.getElementsByTagName("tr")[6].getElementsByTagName("td");
+	for (var i = 0; i < tdf.length; i++) {
+		if (tdf[i].innerHTML == "1") {
+			if (!nvp) {
+				nvp = {};
+			}
+			nvp[i] = row[tdh[i].innerHTML];
+		}
+	}
+	if (nvp) {
+		console.debug("pk_lookup");
+		for (var k in nvp) {
+			console.debug(k + " " + nvp[k]);
+		}
+	}
+	return nvp ? this.tr_lookup(table, nvp) : [];
 }
 
 //_____________________________________________________________________________
@@ -142,12 +198,24 @@ cx.microformat = function cx_microformat(qid, table, db, sql, stmt, rows) {
 	}
 	for (var row in rows) {
 		var r = rows[row];
-		var tr = document.createElement("tr");
-		tbody.appendChild(tr);
-		for (var c in r) {
-			var td = document.createElement("td");
-			td.innerHTML = r[c];
-			tr.appendChild(td);
+		var p = this.pk_lookup(table, r);
+		var tr;
+		// @todo - check at most one member of 'p'
+		if (p.length > 0) {
+			tr = p[0];
+			var td = tr.getElementsByTagName("td");
+			var i = 0;
+			for (var c in r) {
+				td[i++].innerHTML = r[c];
+			}			
+		} else {
+			tr = document.createElement("tr");
+			tbody.appendChild(tr);
+			for (var c in r) {
+				var td = document.createElement("td");
+				td.innerHTML = r[c];
+				tr.appendChild(td);
+			}
 		}
 	} // row
 	return;
@@ -159,14 +227,13 @@ cx.metasql = function cx_metasql(qid, table, db, sql, stmt) {
 	if (thead.length > 0) {
 		return;
 	}
-	var meta = /^meta/.test(sql) ? sql : "meta" + sql;
 	thead = document.createElement("thead");
 	table.appendChild(thead);
-	var metasql = document.getElementById(db + "." + meta + "." + qid + "." + 1);
+	var metasql = document.getElementById(db + ".meta." + qid + "." + 1);
 	if (!metasql) {
 		return;
 	}
-	var metatable = document.getElementById(db + "." + meta + "." + qid + "." + 2);
+	var metatable = document.getElementById(db + ".meta." + qid + "." + 2);
 	var mtl = metatable.getElementsByTagName("tbody")[0].getElementsByTagName("tr")[0].getElementsByTagName("td").length;
 	var tfoot;
 	if (metatable) {
@@ -204,6 +271,23 @@ cx.metasql = function cx_metasql(qid, table, db, sql, stmt) {
 }
 
 //_____________________________________________________________________________
+cx.get_cell = function cx_get_cell(id, r, c) {
+	var table = document.getElementById(id);
+	var tbody = table.getElementsByTagName("tbody");
+	if (tbody.length === 0) return;
+	var tr = tbody[0].getElementsByTagName("tr");
+	if (tr.length === 0) return;
+	var td = tr[r].getElementsByTagName("td");
+	if (td.length === 0) return;
+	return td[c].innerHTML;	
+}
+
+//_____________________________________________________________________________
+cx.get_session = function cx_get_session() {
+	return this.get_cell("game.session_start.999.1", 0, 0);
+}
+
+//_____________________________________________________________________________
 // @todo - notifications for data changes
 // - DIV can be ground zero for connecting to other subsystems
 cx.eval_o = function cx_eval_o(data, root) {
@@ -214,11 +298,24 @@ cx.eval_o = function cx_eval_o(data, root) {
 		console.warn(e);
 		return;
 	}
-	// - convert the input data into microformat
+	// - convert JSON to microformat
 	for (var pass = 0; pass < 2; pass++) {
 		for (var dpad in it) {for (var db in it[dpad]) {
 			for (var pad in it[dpad][db]) {for (var sql in it[dpad][db][pad]) {
-				var qid = it[dpad][db][pad][sql][0][0]['qid'];
+				var qid;
+				// - look for query identifier
+				for (var i = 0; i < 3; i++) {
+					try {
+						qid = it[dpad][db][pad][sql][i][0]['qid'];
+					} catch (e) {
+					}
+					if (qid) {
+						break;
+					}
+				}
+				if (!qid) {
+					qid = "666";
+				}
 				var div = this.find_or_create(document, qid, "div", document.body);
 				for (var stmt in it[dpad][db][pad][sql]) {
 					var table = this.find_or_create(document, db + "." + sql + "." + qid + "." + stmt,

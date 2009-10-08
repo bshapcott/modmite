@@ -185,6 +185,7 @@ static int xFilter(cursor *c, int idxNum, const char *idxStr,
 static int xFilter_bind(cursor *c, int idxNum, const char *idxStr,
    int argc, sqlite3_value **argv)
 {
+  int r;
   sqlite3_stmt *stmt[2];
   sqlite3_prepare_v2(((vtab *)c->base.pVtab)->db,
                      "SELECT name, stmt FROM query",
@@ -194,8 +195,8 @@ static int xFilter_bind(cursor *c, int idxNum, const char *idxStr,
     char const *sql = (char const *)sqlite3_column_text(stmt[0], 1);
     apr_table_t *dedup = apr_table_make(c->pool, 12);
     while (sql && *sql) {
-      if (SQLITE_OK == sqlite3_prepare_v2
-          (((vtab *)c->base.pVtab)->db, sql, -1, &stmt[1], &sql))
+      if (SQLITE_OK == (r = sqlite3_prepare_v2
+          (((vtab *)c->base.pVtab)->db, sql, -1, &stmt[1], &sql)))
       {
         int n = sqlite3_bind_parameter_count(stmt[1]);
         int i;
@@ -210,6 +211,8 @@ static int xFilter_bind(cursor *c, int idxNum, const char *idxStr,
             APR_ARRAY_IDX(row, 1, char *) = (char *)bind;
           }
         }
+      } else {
+        return r;
       }
     }
   }
@@ -268,10 +271,10 @@ static int xFilter_sql(cursor *c, int idxNum, const char *idxStr,
     apr_array_header_t *row;
     char const *name = apr_pstrdup(c->pool, (char const *)sqlite3_column_text(stmt[0], 0));
     char const *sql = (char const *)sqlite3_column_text(stmt[0], 1);
-    int s = 0;
+    int s = 0, r;
     while (sql && *sql) {
-      if (SQLITE_OK == sqlite3_prepare_v2
-        (((vtab *)c->base.pVtab)->db, sql, -1, &stmt[1], &sql))
+      if (SQLITE_OK == (r = sqlite3_prepare_v2
+        (((vtab *)c->base.pVtab)->db, sql, -1, &stmt[1], &sql)))
       {
         /// \todo - replace stack buf
         char sbuf[16];
@@ -294,6 +297,9 @@ static int xFilter_sql(cursor *c, int idxNum, const char *idxStr,
           APR_ARRAY_PUSH(row, char const *) =
             apr_pstrdup(c->pool, sqlite3_column_name(stmt[1], i));
         }
+      } else {
+        char *s = sqlite3_errmsg(((vtab *)c->base.pVtab)->db);
+        return r;
       }
       s++;
     }

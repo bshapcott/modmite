@@ -333,24 +333,6 @@ static void json_root_end(Transaction *xn) {
 }
 
 //____________________________________________________________________________
-/// - start output of database metadata
-/// - outputs a synthetic key, since none is directly associated with the
-///   database, and an opening brace
-/// @param xn - the transaction information associated with the HTTP request
-static void json_meta_start(Transaction *xn) {
-   ap_rputs("\"meta\":{", xn->request);
-}
-
-//____________________________________________________________________________
-/// - completes output of database metadata
-/// - simply outputs a closing brace
-/// @param xn - the transaction information associated with the HTTP request
-static void json_meta_end(Transaction *xn) {
-   ap_rputs("}", xn->request);
-   return;
-}
-
-//____________________________________________________________________________
 /// - start processing SQL for a particular database
 /// - key is the name of the database, which is the database file's basename
 ///   (the filename with path and extension removed)
@@ -533,7 +515,6 @@ static void json_error(Transaction *xn, char const *msg) {
 //____________________________________________________________________________
 output_callbacks json_ocb = {
    json_root_start, json_root_end,
-   json_meta_start, json_meta_end,
    json_db_start, json_db_end, json_sql_start, json_sql_end,
    json_stmt_start, json_stmt_end, json_row_start, json_row_end,
    json_col, json_col_change, json_col, json_comment, json_error};

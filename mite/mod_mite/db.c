@@ -120,7 +120,7 @@ void db_bind_start(Transaction *xn) {
 
 //____________________________________________________________________________
 void db_bind_end(Transaction *xn) {
-  int i, j, c;
+  int i, j, c, r;
   int col_count; 
   char h;	
   int row_count = 0;
@@ -139,7 +139,7 @@ void db_bind_end(Transaction *xn) {
 #if CH_DEV
     (*xn->ocb->comment)(xn, sqlite3_sql(statement));
 #endif
-    while (sqlite3_step(statement) == SQLITE_ROW) {
+    while (SQLITE_ROW == (r = sqlite3_step(statement))) {
       (*xn->ocb->row_start)(xn, ++row_count);
       c = sqlite3_data_count(statement);
       h = 0;
@@ -170,6 +170,10 @@ void db_bind_end(Transaction *xn) {
         }
       }
       (*xn->ocb->row_end)(xn, !h);
+    }
+    if (r != SQLITE_OK && r != SQLITE_DONE) {
+      // @todo - fail the transaction, don't just emit comment!
+      (*xn->ocb->comment)(xn, sqlite3_errmsg(xn->db));
     }
     (*xn->ocb->stmt_end)(xn);
   }
