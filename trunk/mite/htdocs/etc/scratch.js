@@ -1,7 +1,7 @@
 
-cx = {};
+mite = {};
 
-cx.maker = function() {
+mite.maker = function() {
 	var table = [];
 	function t(f) {
 		if (typeof f === 'function' && f === funcs[0]) {
@@ -19,5 +19,5 @@ cx.maker = function() {
 	return t;
 }
 
-it = cx.maker();
+it = mite.maker();
 
