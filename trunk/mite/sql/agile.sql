@@ -72,94 +72,67 @@ CREATE TABLE widget (
 INSERT INTO widget (usr, parent, session, widget_type) VALUES (1, 0, 0, 0);
 INSERT INTO widget (usr, parent, session, widget_type) VALUES (0, 0, 1, 1);
 
-DROP TABLE IF EXISTS epic;
-CREATE TABLE epic (
+DROP TABLE IF EXISTS board;
+CREATE TABLE board (
 	id INTEGER PRIMARY KEY NOT NULL,
 	usr INTEGER REFERENCES user(id) DEFAULT (0),
 	grp INTEGER REFERENCES grp(id) DEFAULT (0),
-	title 'text/plain',
-	content 'text/plain',
 	created DATE DEFAULT (CURRENT_TIMESTAMP),
 	updated DATE DEFAULT (CURRENT_TIMESTAMP) );
 
-DROP TABLE IF EXISTS story;
-CREATE TABLE story (
-	id INTEGER PRIMARY KEY NOT NULL,
-	usr INTEGER REFERENCES user(id) DEFAULT (0),
-	grp INTEGER REFERENCES grp(id) DEFAULT (0),
-	epic INTEGER REFERENCES epic(id),
-	title 'text/plain',
-	content 'text/plain',
-	url 'application/x-url',
-	estimate FLOAT,
-	created DATE DEFAULT (CURRENT_TIMESTAMP),
-	updated DATE DEFAULT (CURRENT_TIMESTAMP) );
-
-INSERT INTO story (epic, title, content, url, estimate)
-       VALUES (0, "Display mapping values", "Display mapping values in UI.",
-       "http://foobar.com/display_map", 8.0);
-INSERT INTO story (epic, title, content, url, estimate)
-       VALUES (0, "Hook up hierarchical data", "Resolve all references and links in returned data.",
-       "http://foobar.com/hier_data", 12.5);
-
-DROP TABLE IF EXISTS task;
-CREATE TABLE task (
-	id INTEGER PRIMARY KEY NOT NULL,
-	usr INTEGER REFERENCES user(id) DEFAULT (0),
-	grp INTEGER REFERENCES grp(id) DEFAULT (0),
-	story INTEGER REFERENCES story(id),
-	title 'text/plain',
-	content 'text/plain',
-	url 'application/x-url',
-	estimate FLOAT,
-	created DATE DEFAULT (CURRENT_TIMESTAMP),
-	updated DATE DEFAULT (CURRENT_TIMESTAMP) );
-
-INSERT INTO task (story, title, content, url, estimate)
-       VALUES (1, "Finish Designing UI",
-       "Finally finish designing the UI with proper resizing.",
-       "http://foobar.com/finish_ui", 8);
-INSERT INTO task (story, title, content, url, estimate)
-       VALUES (1, "Autogen SQL Script",
-       "Generate the database schema and DDL from object descriptions.",
-       "http://foobar.com/autogen", 8);
-INSERT INTO task (story, title, content, url, estimate)
-       VALUES (1, "Fix Timestamp Trigger",
-       "Timestamp trigger affects all rows.",
-       "http://foobar.com/timestamp", 8);
-INSERT INTO task (story, title, content, url, estimate)
-       VALUES (2, "Resolve links",
-       "Resolve links in returned data.",
-       "http://foobar.com/resolve_linx", 8);
-INSERT INTO task (story, title, content, url, estimate)
-       VALUES (2, "Resolve references",
-       "Resolve references in returned data.",
-       "http://foobar.com/resolve_refs", 8);
-
-CREATE TRIGGER task_timestamp AFTER INSERT ON task
+CREATE TRIGGER board_updated AFTER INSERT ON board
 BEGIN
-	UPDATE task SET timestamp = datetime('now') WHERE id = new.id;
+	UPDATE board SET updated = datetime('now') WHERE id = new.id;
 END;
 
-DROP VIEW IF EXISTS story_task;
-CREATE VIEW story_task AS SELECT task.id AS child, task.story
-	FROM task, story WHERE story.id = task.story;
-
-DROP TABLE IF EXISTS theme;
-CREATE TABLE theme (
+DROP TABLE IF EXISTS piece_type;
+CREATE TABLE piece_type (
 	id INTEGER PRIMARY KEY NOT NULL,
-	title 'text/plain',
-	content 'text/plain',
+	name STRING,
+	icon STRING
+);
+
+INSERT INTO piece_type (id, name) VALUES (0, 'pawn');
+INSERT INTO piece_type (id, name) VALUES (1, 'rook');
+INSERT INTO piece_type (id, name) VALUES (2, 'bishop');
+INSERT INTO piece_type (id, name) VALUES (3, 'knight');
+INSERT INTO piece_type (id, name) VALUES (4, 'queen');
+INSERT INTO piece_type (id, name) VALUES (5, 'king');
+
+DROP TABLE IF EXISTS piece;
+CREATE TABLE piece (
+	id INTEGER PRIMARY KEY NOT NULL,
+	usr INTEGER REFERENCES user(id) DEFAULT (0),
+	grp INTEGER REFERENCES grp(id) DEFAULT (0),
+	board INTEGER REFERENCES board(id) DEFAULT (0),
+	player INTEGER REFERENCES user(id) DEFAULT (0),
+	type INTEGER REFERENCES piece_type(id) DEFAULT (0),
+	x INTEGER NOT NULL,
+	y INTEGER NOT NULL,
+	removed INTEGER DEFAULT (0),
 	created DATE DEFAULT (CURRENT_TIMESTAMP),
 	updated DATE DEFAULT (CURRENT_TIMESTAMP) );
 
-DROP TABLE IF EXISTS tag;
-CREATE TABLE tag (
+CREATE TRIGGER piece_updated AFTER INSERT ON piece
+BEGIN
+	UPDATE piece SET updated = datetime('now') WHERE id = new.id;
+END;
+
+DROP TABLE IF EXISTS move;
+CREATE TABLE move (
 	id INTEGER PRIMARY KEY NOT NULL,
-	title 'text/plain',
-	content 'text/plain',
+	usr INTEGER REFERENCES user(id) DEFAULT (0),
+	grp INTEGER REFERENCES grp(id) DEFAULT (0),
+	piece INTEGER REFERENCES piece(id),
+	x INTEGER NOT NULL,
+	y INTEGER NOT NULL,
 	created DATE DEFAULT (CURRENT_TIMESTAMP),
 	updated DATE DEFAULT (CURRENT_TIMESTAMP) );
+		
+CREATE TRIGGER move_updated AFTER INSERT ON move
+BEGIN
+	UPDATE move SET updated = datetime('now') WHERE id = new.id;
+END;
 
 DROP TABLE IF EXISTS query;
 CREATE TABLE query (
@@ -169,24 +142,93 @@ CREATE TABLE query (
 	created DATE DEFAULT (CURRENT_TIMESTAMP),
 	updated DATE DEFAULT (CURRENT_TIMESTAMP) );
 
--- - metadata for the 'qtask' stored SQL
-INSERT INTO query (name, stmt)
-	VALUES ('metaqtask',
-	"SELECT i AS qid FROM literal WHERE i=$qid;
-	 SELECT * FROM metasql WHERE name='metaqtask' OR name='qtask';
-	 SELECT * FROM metatable WHERE tbl IN ('metasql', 'metabinding', 'metatable', 'task', 'story');
-	 SELECT * FROM metabinding WHERE name='metaqtask' OR name='qtask';");
+DROP TABLE IF EXISTS scope;
+CREATE TABLE scope (
+	id INTEGER PRIMARY KEY NOT NULL,
+	session INTEGER REFERENCES session(id) NOT NULL,
+	query INTEGER,
+	board REFERENCES board(id),
+	time DATE DEFAULT (0) );
 
--- - stored SQL
--- - in a production server, this is the only SQL that can be executed against
---   the database
+-- - metadata for stored SQL
 INSERT INTO query (name, stmt)
-	VALUES ('qtask',
-	"SELECT i AS qid FROM literal WHERE i=$qid;
-	 SELECT id, title, content, 'task' AS type FROM task WHERE story=$story;
-	 SELECT id, title, content, 'story' AS type FROM story WHERE id=$story;
-	 SELECT story.id AS story, task.id AS task FROM story, task
-		WHERE story.id = task.story AND story.id = $story");
+	VALUES ('meta',
+	"SELECT session.id AS sid, i AS qid FROM session, literal WHERE session.id = $sid AND i=$qid;
+	 SELECT * FROM metasql;
+	 SELECT * FROM metatable WHERE tbl IN ('metasql', 'metabinding', 'metatable', 'metaforeign', 'literal', 'session', 'scope', 'piece', 'board', 'piece_type', 'move');
+	 SELECT * FROM metabinding;
+	 SELECT * FROM metaforeign;");
+
+--
+INSERT INTO query (name, stmt)
+	VALUES ('session_start',
+	"INSERT INTO session (id) VALUES (null);
+	 SELECT session.id AS sid, i AS qid FROM session, literal
+		WHERE session.id = last_insert_rowid()
+		AND i = $qid;");
+
+-- set up a new game
+INSERT INTO query (name, stmt)
+	VALUES ('game_start',
+	"SELECT session.id AS sid, i AS qid FROM session, literal WHERE session.id = $sid AND i=$qid;
+	 INSERT INTO board (id) VALUES (null);
+	 INSERT INTO piece (board, type, x, y)
+		VALUES (last_insert_rowid(), 0, 2, 1);
+	 INSERT INTO piece (board, type, x, y)
+		VALUES ((SELECT piece.board FROM piece WHERE piece.id = last_insert_rowid()), 0, 2, 2);
+	 INSERT INTO piece (board, type, x, y)
+		VALUES ((SELECT piece.board FROM piece WHERE piece.id = last_insert_rowid()), 0, 2, 3);
+	 INSERT INTO piece (board, type, x, y)
+		VALUES ((SELECT piece.board FROM piece WHERE piece.id = last_insert_rowid()), 1, 1, 1);
+	 INSERT INTO piece (board, type, x, y)
+		VALUES ((SELECT piece.board FROM piece WHERE piece.id = last_insert_rowid()), 1, 1, 8);
+	 SELECT board.id AS board FROM piece, board
+		WHERE piece.id = last_insert_rowid()
+		AND board.id = piece.board;");
+
+-- get current game state
+INSERT INTO query (name, stmt)
+	VALUES ('game_state',
+	"SELECT session.id AS sid, i AS qid FROM session, literal WHERE session.id = $sid AND i=$qid;
+	 SELECT * FROM board WHERE id = $board;
+	 SELECT * FROM piece WHERE board = $board;
+	 SELECT * FROM piece_type;");
+
+-- - propose a move
+INSERT INTO query (name, stmt)
+	VALUES ('game_move',
+	"INSERT INTO move (piece, x, y) VALUES ($piece, $x, $y);");
+
+--
+INSERT INTO query (name, stmt)
+	VALUES ('game_scope',
+	"SELECT session.id AS sid, i AS qid FROM session, literal WHERE session.id = $sid AND i=$qid;
+	 INSERT OR REPLACE INTO scope (id, session, query, board)
+		VALUES ((SELECT id FROM scope WHERE session = $sid AND query = $qid AND board = $board),
+			$sid, $qid, $board);
+	 SELECT id AS scid FROM scope WHERE id = last_insert_rowid();");
+
+INSERT INTO query (name, stmt)
+	VALUES ('game_check',
+	"SELECT session AS sid, query AS qid FROM scope WHERE id = $scid;
+	 SELECT scope.id, count(piece) FROM move, piece, scope
+		WHERE move.updated > (SELECT time FROM scope WHERE id = $scid)
+		AND scope.id = $scid
+		AND piece.id = move.piece
+		LIMIT 1;");
+
+-- 
+INSERT INTO query (name, stmt)
+	VALUES ('game_delta',
+	"SELECT session AS sid, query AS qid FROM scope WHERE id = $scid;
+	 SELECT piece, move.x, move.y FROM move, piece
+		WHERE move.updated > (SELECT time FROM scope WHERE id = $scid)
+		AND piece.id = move.piece
+		AND piece.board = (SELECT board FROM scope WHERE id = $scid);
+	 UPDATE scope SET time = (SELECT max(move.updated) FROM move, piece
+		WHERE piece.id = move.piece AND piece.board = (SELECT board FROM scope WHERE id = $scid))
+		WHERE id = $scid;
+	SELECT time FROM scope WHERE id = $scid;");
 
 --_____________________________________________________________________ CONTACT
 -- mailto:brad at modmite dot com

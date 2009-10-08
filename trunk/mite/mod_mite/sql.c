@@ -70,7 +70,7 @@ void sql_get(Transaction *xn) {
                xn->synthetic = 0;
             }
          } else {
-            (*xn->ocb->error)(xn, "bad SQL");
+            (*xn->ocb->error)(xn, sqlite3_errmsg(xn->db));
             sql_cleanup(xn);
             break;
          }
