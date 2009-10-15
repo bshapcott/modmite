@@ -8,8 +8,6 @@
 // - also demonstrates creating Dojo widjets programmatically
 // - Dojo dependencies in this module ALLOWED
 
-if (!mite) {throw new Error("mite.js must be loaded BEFORE ui.js");}
-
 //_____________________________________________________________________________
 ui = {};
 
@@ -24,7 +22,7 @@ ui.send_output = function() {
 	} else if (dojo.byId('oxml').checked) {
 		accept = 'application/xml';
 	}
-	mite.send_data(input.value, accept,
+	mite_send_data(input.value, accept,
 		function (xhr) {
 			if (xhr.readyState == 4) {
 				output.value = xhr.responseText;
@@ -36,7 +34,7 @@ ui.send_output = function() {
 
 //_____________________________________________________________________________
 // @todo: refactor
-ui.make_the_ui = function(m) {
+ui.make_the_ui = function() {
 
 	//_________________________________________________________________________
 	// TREE
@@ -182,22 +180,31 @@ ui.make_the_ui = function(m) {
 	button = new dijit.form.Button({
 		iconClass: "dijitEditorIcon dijitEditorIconCopy",
 		onClick: function (e) {
-			output = dojo.byId("output");
-			mite.eval_o(output.value);
+			var output = dojo.byId("output");
+			mite_eval_o(output.value);
 		},
 		label: "EVAL"
+	});
+	buttonbox.containerNode.appendChild(button.domNode);
+	button = new dijit.form.Button({
+		iconClass: "dijitEditorIcon dijitEditorIconCopy",
+		onClick: function (e) {
+			var div = dojo.byId("999");
+			div.style.display = div.style.display == 'none' ? '' : 'none';
+		},
+		label: "SHOW/HIDE TABLES"
 	});
 	buttonbox.containerNode.appendChild(button.domNode);
 	var input = new dijit.form.SimpleTextarea({
 		id: "input",
 		name: "input",
-		cols: 80
+		cols: 120
 	});
 	icp.containerNode.appendChild(input.domNode);
 	var output = new dijit.form.SimpleTextarea({
 		id: "output",
 		name: "output",
-		cols: 80,
+		cols: 120,
 		rows: 25
 	});
 	ocp.containerNode.appendChild(output.domNode);

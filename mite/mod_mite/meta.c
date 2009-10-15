@@ -276,7 +276,7 @@ static int xFilter_sql(cursor *c, int idxNum, const char *idxStr,
       if (SQLITE_OK == (r = sqlite3_prepare_v2
         (((vtab *)c->base.pVtab)->db, sql, -1, &stmt[1], &sql)))
       {
-        /// \todo - replace stack buf
+        /// @todo - replace stack buf
         char sbuf[16];
         int i, n = sqlite3_column_count(stmt[1]);
         char *ss = apr_pstrdup(c->pool, itoa(s, sbuf, 10));
@@ -285,7 +285,7 @@ static int xFilter_sql(cursor *c, int idxNum, const char *idxStr,
           APR_ARRAY_PUSH(c->table, apr_array_header_t *) = row;
           APR_ARRAY_PUSH(row, char const *) = name;
           APR_ARRAY_PUSH(row, char const *) = ss;
-          // \todo - small opt by caching strings in array
+          // @todo - small opt by caching strings in array
           APR_ARRAY_PUSH(row, char const *) =
             apr_pstrdup(c->pool, itoa(i, sbuf, 10));
           APR_ARRAY_PUSH(row, char const *) =
@@ -340,7 +340,7 @@ static int xFilter_view(cursor *c, int idxNum, const char *idxStr,
         row = apr_array_make(c->pool, n, sizeof(char *));
         APR_ARRAY_PUSH(c->table, apr_array_header_t *) = row;
         APR_ARRAY_PUSH(row, char const *) = name;
-        // \todo - small opt by caching strings in array
+        /// @todo - small opt by caching strings in array
         APR_ARRAY_PUSH(row, char const *) =
           apr_pstrdup(c->pool, itoa(i, sbuf, 10));
         APR_ARRAY_PUSH(row, char const *) =

@@ -11,12 +11,9 @@
 //     have a native implementation
 
 //_____________________________________________________________________________
-mite = {};
-
-//_____________________________________________________________________________
 // - x-browser cruft
 // @todo: Msxml2.XMLHTTP, Microsoft.XMLHTTP, Msxml2.XMLHTTP.4.0
-mite.get_xhr = function mite_get_xhr() {
+function mite_get_xhr() {
 	var xhr = null;
 	if (window.XMLHttpRequest) {
 		xhr = new XMLHttpRequest;
@@ -32,8 +29,8 @@ mite.get_xhr = function mite_get_xhr() {
 // @param	accept		- requested mime type of response data
 //                        (per IANA.org, or X-token)
 // @param	cb			- callback function to handle any response
-mite.send_data = function mite_send_data(data, accept, cb) {
-	var xhr = mite.get_xhr();
+function mite_send_data(data, accept, cb) {
+	var xhr = mite_get_xhr();
 	if (!xhr) {
 		return;
 	}
@@ -81,11 +78,11 @@ mite.send_data = function mite_send_data(data, accept, cb) {
 //_____________________________________________________________________________
 // - custom serializer breaks cyclic serialization in dojo.toJson
 // todo: prototype func
-mite.toJson = function mite_toJson() {
+function mite_toJson() {
 	var obj = {};
 	for (var i in this) {
 		if (i !== "json" && i !== "__json__") {
-			obj[i] = /^\$\$/.test(i) ? mite.oid(this[i]) : this[i];
+			obj[i] = /^\$\$/.test(i) ? mite_oid(this[i]) : this[i];
 		}
 	}
 	// - serialize this instead of actual object
@@ -93,19 +90,20 @@ mite.toJson = function mite_toJson() {
 }
 
 //_____________________________________________________________________________'
-mite.find_or_create = function mite_find_or_create(doc, id, type, parent) {
+function mite_find_or_create(doc, id, type, parent) {
 	var e = doc.getElementById(id);
 	if (!e) {
 		e = document.createElement(type);
 		e.setAttribute("id", id);
 		e.setAttribute("class", type);
+		s.style.display = 'none';
 		parent.appendChild(e);
 	}
 	return e;
 }
 
 //_____________________________________________________________________________
-mite.lookup = function mite_lookup(table, nvp) {
+function mite_lookup(table, nvp) {
 	var r = [];
 	var tr = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
 	for (var i = 0; i < tr.length; i++) {
@@ -129,7 +127,7 @@ mite.lookup = function mite_lookup(table, nvp) {
 }
 
 //_____________________________________________________________________________
-mite.tr_lookup = function mite_tr_lookup(table, nvp) {
+function mite_tr_lookup(table, nvp) {
 	var r = [];
 	var tr = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
 	for (var i = 0; i < tr.length; i++) {
@@ -149,7 +147,7 @@ mite.tr_lookup = function mite_tr_lookup(table, nvp) {
 }
 
 //_____________________________________________________________________________
-mite.pk_lookup = function mite_pk_lookup(table, row) {
+function mite_pk_lookup(table, row) {
 	var tfoot = table.getElementsByTagName("tfoot");
 	if (tfoot.length == 0) {
 		return [];
@@ -172,17 +170,11 @@ mite.pk_lookup = function mite_pk_lookup(table, row) {
 			nvp[i] = row[tdh[i].innerHTML];
 		}
 	}
-	if (nvp) {
-		console.debug("pk_lookup");
-		for (var k in nvp) {
-			console.debug(k + " " + nvp[k]);
-		}
-	}
-	return nvp ? this.tr_lookup(table, nvp) : [];
+	return nvp ? mite_tr_lookup(table, nvp) : [];
 }
 
 //_____________________________________________________________________________
-mite.microformat = function mite_microformat(qid, table, db, sql, stmt, rows) {
+function mite_microformat(qid, table, db, sql, stmt, rows) {
 	var caption = table.getElementsByTagName("caption");
 	if (caption.length == 0) {
 		caption = document.createElement("caption");
@@ -198,7 +190,7 @@ mite.microformat = function mite_microformat(qid, table, db, sql, stmt, rows) {
 	}
 	for (var row in rows) {
 		var r = rows[row];
-		var p = this.pk_lookup(table, r);
+		var p = mite_pk_lookup(table, r);
 		var tr;
 		// @todo - check at most one member of 'p'
 		if (p.length > 0) {
@@ -222,7 +214,7 @@ mite.microformat = function mite_microformat(qid, table, db, sql, stmt, rows) {
 }
 
 //_____________________________________________________________________________
-mite.metasql = function mite_metasql(qid, table, db, sql, stmt) {
+function mite_metasql(qid, table, db, sql, stmt) {
 	var thead = table.getElementsByTagName("thead");
 	if (thead.length > 0) {
 		return;
@@ -242,7 +234,7 @@ mite.metasql = function mite_metasql(qid, table, db, sql, stmt) {
 	}
 	var thr = [];
 	var tfr = [];
-	var s = this.lookup(metasql, {0: sql, 1: stmt});
+	var s = mite_lookup(metasql, {0: sql, 1: stmt});
 	for (var i in s) {
 		for (var j in s[i]) {
 			if (!thr[j]) {
@@ -254,7 +246,7 @@ mite.metasql = function mite_metasql(qid, table, db, sql, stmt) {
 			td.innerHTML = s[i][j];
 			thr[j].appendChild(td);
 		}
-		var t = this.lookup(metatable, {0: s[i][4], 2: s[i][5]});
+		var t = mite_lookup(metatable, {0: s[i][4], 2: s[i][5]});
 		var len = t.length > 0 ? t[0].length : mtl;
 		for (var j = 0; j < len; j++) {
 			if (!tfr[j]) {
@@ -271,7 +263,7 @@ mite.metasql = function mite_metasql(qid, table, db, sql, stmt) {
 }
 
 //_____________________________________________________________________________
-mite.get_cell = function mite_get_cell(id, r, c) {
+function mite_get_cell(id, r, c) {
 	var table = document.getElementById(id);
 	var tbody = table.getElementsByTagName("tbody");
 	if (tbody.length === 0) return;
@@ -283,14 +275,14 @@ mite.get_cell = function mite_get_cell(id, r, c) {
 }
 
 //_____________________________________________________________________________
-mite.get_session = function mite_get_session() {
-	return this.get_cell("game.session_start.999.1", 0, 0);
+function mite_get_session() {
+	return mite_get_cell("game.session_start.999.1", 0, 0);
 }
 
 //_____________________________________________________________________________
 // @todo - notifications for data changes
 // - DIV can be ground zero for connecting to other subsystems
-mite.eval_o = function mite_eval_o(data, root) {
+function mite_eval_o(data) {
 	try {
 		var it = eval('(' + data + ')');
 	} catch (e) {
@@ -316,22 +308,54 @@ mite.eval_o = function mite_eval_o(data, root) {
 				if (!qid) {
 					qid = "666";
 				}
-				var div = this.find_or_create(document, qid, "div", document.body);
+				var div = mite_find_or_create(document, qid, "div", document.body);
 				for (var stmt in it[dpad][db][pad][sql]) {
-					var table = this.find_or_create(document, db + "." + sql + "." + qid + "." + stmt,
+					var table = mite_find_or_create(document, db + "." + sql + "." + qid + "." + stmt,
 						"table", div);
 					switch (pass) {
 					case 0:
-						this.microformat(qid, table, db, sql, stmt, it[dpad][db][pad][sql][stmt]);
+						mite_microformat(qid, table, db, sql, stmt, it[dpad][db][pad][sql][stmt]);
 						break;
 					case 1:
-						this.metasql(qid, table, db, sql, stmt);
+						mite_metasql(qid, table, db, sql, stmt);
 						break;
 					}
 				} // stmt
 			}} // pad + sql
 		}} // pad + db
 	} // pass
+	return;
+}
+
+//__________________________________________________________________________
+// - quick & dirty scratch test
+function mite_scratch_test(funcs) {
+  if (funcs.length == 0) {
+	console.debug("empty funcs");
+  }
+  var data = (funcs.shift())();
+  // var input = dijit.byId("input");
+  // input.attr("value", data);
+  mite_send_data(data, 'application/json', function (xhr) {
+    if (xhr.readyState == 4) {
+      // var output = dijit.byId("output");
+      // output.attr("value", xhr.responseText);
+      mite_eval_o(xhr.responseText);
+      if (funcs.length > 0) mite_scratch_test(funcs);
+    }
+  });
+  return;
+}
+
+//__________________________________________________________________________
+function mite_poll_test(query) {
+	mite_scratch_test([query]);
+	return;
+}
+
+//__________________________________________________________________________
+function mite_poll(query) {
+	setInterval(mite_poll_test, 1000, query);
 	return;
 }
 

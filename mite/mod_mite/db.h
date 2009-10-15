@@ -103,7 +103,7 @@ struct Transaction {
   apr_array_header_t *path;
   /// - SQL statements
   apr_array_header_t *statements;
-  /// \todo dox
+  /// @todo dox
   const char *name;
   /// - transaction parameters, derived from URL query parameters, cookie
   ///   (session only), or last inserted rowid

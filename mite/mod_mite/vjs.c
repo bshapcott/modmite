@@ -17,8 +17,8 @@ static const sqlite3_module module;
 static int xConnect(sqlite3 *db, void *pAux, int argc, const char * const *argv,
                    sqlite3_vtab **ppVTab, char **c)
 {
-   int rc;
-  // \todo - no local bufs
+  int rc;
+  /// @todo - no local bufs
   char buf[1024];
   *buf = '\0';
   strcat(buf, "CREATE TABLE ");

@@ -23,8 +23,8 @@ void sql_parse(Transaction *xn, char const *buf, apr_size_t len) {
    strncpy(&xn->scratch[1], ((char **)xn->path->elts)[1], 252);
    (*xn->ocb->root_start)(xn, &xn->scratch[1]);
    db_start(xn);
-   // \todo - maybe can just ref script from Transaction before calling
-   //         into db_sql_start
+   /// @todo - maybe can just ref script from Transaction before calling
+   ///         into db_sql_start
    sql = apr_pstrmemdup(xn->request->pool, buf, len);
    while (sql && *sql) {
       if (sqlite3_prepare_v2(xn->db, sql, -1, &s, &sql) == SQLITE_OK) {
