@@ -10,7 +10,7 @@
     TD {border-width: 1px; padding: 0px; border-style: solid; }
     TD.meta {background-color: AliceBlue; }
   </style>
-	<script type="text/javascript" src="/js/dojo-release-1.3.2-src/dojo/dojo.js" djConfig="debugAtAllCosts:true, isDebug: true, parseOnLoad: false, dojoIframeHistoryUrl:'/js/dojo-release-1.2.0-src/dojo/resources/iframe_history.html'">
+	<script type="text/javascript" src="/js/dojo-release-1.3.2-src/dojo/dojo.js" djConfig="debugAtAllCosts:true, isDebug: true, parseOnLoad: false, dojoIframeHistoryUrl:'/js/dojo-release-1.3.2-src/dojo/resources/iframe_history.html'">
 	</script>
 	<script type="text/javascript" src="mite.js"></script>
 	<script type="text/javascript" src="ui.js"></script>
@@ -25,40 +25,30 @@
     dojo.require("dijit.form.SimpleTextarea");
     dojo.require("dijit.Tree");
     dojo.require("dijit.Menu");
+    dojo.require("ch.TreeModel");
     dojo.addOnLoad( function() {
 
       // @todo - UI construction from data source
-      ui.make_the_ui(mite);
+      ui.make_the_ui();
 
-		  //__________________________________________________________________________
-		  // - quick & dirty scratch test
-      function test(funcs) {
-        var data = (funcs.shift())();
-        var input = dijit.byId("input");
-        input.attr("value", data);
-        mite.send_data(data, 'application/json', function (xhr) {
-          if (xhr.readyState == 4) {
-            var output = dijit.byId("output");
-            output.attr("value", xhr.responseText);
-            mite.eval_o(xhr.responseText);
-            if (funcs.length > 0) test(funcs);
-          }
-        });
-      }
-      test([
-		    function () {return "/mite/game/session_start?qid=999";},
-        function () {return "/mite/game/meta?qid=999&sid=" + mite.get_session();},
-        function () {return "/mite/game/game_start?qid=999&sid=" + mite.get_session();},
-        function () {return "/mite/game/game_state?qid=999&sid=" + mite.get_session() + "&board="
-          + mite.get_cell("game.game_start.999.7", 0, 0);},
-        function () {return "/mite/game/game_scope?qid=999&sid=" + mite.get_session() + "&board="
-          + mite.get_cell("game.game_start.999.7", 0, 0);},
-        function () {return "/mite/game/game_check?scid=" + mite.get_cell("game.game_scope.999.2", 0, 0);},
-        function () {return "/mite/game/game_move?x=10&y=10&piece=" + mite.get_cell("game.game_state.999.2", 0, 0);},
-        function () {return "/mite/game/game_move?x=10&y=10&piece=" + mite.get_cell("game.game_state.999.2", 1, 0);},
-        function () {return "/mite/game/game_check?scid=" + mite.get_cell("game.game_scope.999.2", 0, 0);},
-        function () {return "/mite/game/game_delta?scid=" + mite.get_cell("game.game_scope.999.2", 0, 0);}
-      ]);  
+      mite_scratch_test([
+        function () {return "/mite/game/session_start?qid=999";},
+        function () {return "/mite/game/meta?qid=999&sid=" + mite_get_session();},
+        function () {return "/mite/game/game_start?qid=999&sid=" + mite_get_session();},
+        function () {return "/mite/game/game_state?qid=999&sid=" + mite_get_session() + "&board="
+          + mite_get_cell("game.game_start.999.7", 0, 0);},
+        function () {return "/mite/game/game_scope?qid=999&sid=" + mite_get_session() + "&board="
+          + mite_get_cell("game.game_start.999.7", 0, 0);},
+        function () {return "/mite/game/game_check?scid=" + mite_get_cell("game.game_scope.999.2", 0, 0);},
+        function () {return "/mite/game/game_move?x=10&y=10&piece=" + mite_get_cell("game.game_state.999.2", 0, 0);},
+        function () {return "/mite/game/game_move?x=10&y=10&piece=" + mite_get_cell("game.game_state.999.2", 1, 0);},
+        function () {return "/mite/game/game_check?scid=" + mite_get_cell("game.game_scope.999.2", 0, 0);},
+        function () {return "/mite/game/game_delta?scid=" + mite_get_cell("game.game_scope.999.2", 0, 0);},
+        function () {
+          mite_poll(function (){return "/mite/game/game_check?scid=" + mite_get_cell("game.game_scope.999.2", 0, 0);});
+          return "/mite/game/game_check?scid=" + mite_get_cell("game.game_scope.999.2", 0, 0);
+        }
+      ]);
     }); // dojo.addOnLoad	
 	</script>
 </body>

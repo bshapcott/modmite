@@ -89,15 +89,19 @@ DROP TABLE IF EXISTS piece_type;
 CREATE TABLE piece_type (
 	id INTEGER PRIMARY KEY NOT NULL,
 	name STRING,
-	icon STRING
+	notation STRING,
+	icon STRING,
+	color INTEGER,
+	x INTEGER NOT NULL,
+	y INTEGER NOT NULL
 );
 
-INSERT INTO piece_type (id, name) VALUES (0, 'pawn');
-INSERT INTO piece_type (id, name) VALUES (1, 'rook');
-INSERT INTO piece_type (id, name) VALUES (2, 'bishop');
-INSERT INTO piece_type (id, name) VALUES (3, 'knight');
-INSERT INTO piece_type (id, name) VALUES (4, 'queen');
-INSERT INTO piece_type (id, name) VALUES (5, 'king');
+INSERT INTO piece_type (id, notation, name, color, x, y) VALUES (0, 'KP', 'pawn', 0, 0, 0);
+INSERT INTO piece_type (id, notation, name, color, x, y) VALUES (1, 'KR', 'rook', 0, 0, 0);
+INSERT INTO piece_type (id, notation, name, color, x, y) VALUES (2, 'KB', 'bishop', 0, 0, 0);
+INSERT INTO piece_type (id, notation, name, color, x, y) VALUES (3, 'KN', 'knight', 0, 0, 0);
+INSERT INTO piece_type (id, notation, name, color, x, y) VALUES (4, 'Q', 'queen', 0, 0, 0);
+INSERT INTO piece_type (id, notation, name, color, x, y) VALUES (5, 'K', 'king', 0, 0, 0);
 
 DROP TABLE IF EXISTS piece;
 CREATE TABLE piece (
@@ -107,8 +111,6 @@ CREATE TABLE piece (
 	board INTEGER REFERENCES board(id) DEFAULT (0),
 	player INTEGER REFERENCES user(id) DEFAULT (0),
 	type INTEGER REFERENCES piece_type(id) DEFAULT (0),
-	x INTEGER NOT NULL,
-	y INTEGER NOT NULL,
 	removed INTEGER DEFAULT (0),
 	created DATE DEFAULT (CURRENT_TIMESTAMP),
 	updated DATE DEFAULT (CURRENT_TIMESTAMP) );
@@ -172,16 +174,16 @@ INSERT INTO query (name, stmt)
 	VALUES ('game_start',
 	"SELECT session.id AS sid, i AS qid FROM session, literal WHERE session.id = $sid AND i=$qid;
 	 INSERT INTO board (id) VALUES (null);
-	 INSERT INTO piece (board, type, x, y)
-		VALUES (last_insert_rowid(), 0, 2, 1);
-	 INSERT INTO piece (board, type, x, y)
-		VALUES ((SELECT piece.board FROM piece WHERE piece.id = last_insert_rowid()), 0, 2, 2);
-	 INSERT INTO piece (board, type, x, y)
-		VALUES ((SELECT piece.board FROM piece WHERE piece.id = last_insert_rowid()), 0, 2, 3);
-	 INSERT INTO piece (board, type, x, y)
-		VALUES ((SELECT piece.board FROM piece WHERE piece.id = last_insert_rowid()), 1, 1, 1);
-	 INSERT INTO piece (board, type, x, y)
-		VALUES ((SELECT piece.board FROM piece WHERE piece.id = last_insert_rowid()), 1, 1, 8);
+	 INSERT INTO piece (board, type)
+		VALUES (last_insert_rowid(), 0);
+	 INSERT INTO piece (board, type)
+		VALUES ((SELECT piece.board FROM piece WHERE piece.id = last_insert_rowid()), 1);
+	 INSERT INTO piece (board, type)
+		VALUES ((SELECT piece.board FROM piece WHERE piece.id = last_insert_rowid()), 2);
+	 INSERT INTO piece (board, type)
+		VALUES ((SELECT piece.board FROM piece WHERE piece.id = last_insert_rowid()), 3);
+	 INSERT INTO piece (board, type)
+		VALUES ((SELECT piece.board FROM piece WHERE piece.id = last_insert_rowid()), 4);
 	 SELECT board.id AS board FROM piece, board
 		WHERE piece.id = last_insert_rowid()
 		AND board.id = piece.board;");
@@ -210,25 +212,30 @@ INSERT INTO query (name, stmt)
 
 INSERT INTO query (name, stmt)
 	VALUES ('game_check',
-	"SELECT session AS sid, query AS qid FROM scope WHERE id = $scid;
-	 SELECT scope.id, count(piece) FROM move, piece, scope
-		WHERE move.updated > (SELECT time FROM scope WHERE id = $scid)
-		AND scope.id = $scid
-		AND piece.id = move.piece
-		LIMIT 1;");
+	"SELECT session.id AS sid, query AS qid FROM session, scope
+		WHERE scope.id = $scid AND session.id = session;
+	 SELECT scope.id AS scid,
+		(SELECT count(*) FROM move, scope, piece
+			WHERE scope.id = $scid
+			AND move.updated > (SELECT time FROM scope WHERE id = $scid)
+			AND move.piece = piece.id
+			AND piece.board = scope.board)
+			AS count
+		FROM scope
+		WHERE scope.id = $scid;");
 
 -- 
 INSERT INTO query (name, stmt)
 	VALUES ('game_delta',
-	"SELECT session AS sid, query AS qid FROM scope WHERE id = $scid;
-	 SELECT piece, move.x, move.y FROM move, piece
+	"SELECT session.id AS sid, query AS qid FROM scope, session
+		WHERE scope.id = $scid AND session.id = session;
+	 SELECT piece.id, move.x, move.y FROM move, piece
 		WHERE move.updated > (SELECT time FROM scope WHERE id = $scid)
 		AND piece.id = move.piece
 		AND piece.board = (SELECT board FROM scope WHERE id = $scid);
 	 UPDATE scope SET time = (SELECT max(move.updated) FROM move, piece
 		WHERE piece.id = move.piece AND piece.board = (SELECT board FROM scope WHERE id = $scid))
-		WHERE id = $scid;
-	SELECT time FROM scope WHERE id = $scid;");
+		WHERE id = $scid;");
 
 --_____________________________________________________________________ CONTACT
 -- mailto:brad at modmite dot com

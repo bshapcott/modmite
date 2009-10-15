@@ -541,6 +541,22 @@
 						>
 					</File>
 				</Filter>
+				<Filter
+					Name="tree"
+					>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dijit\tree\ForestStoreModel.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dijit\tree\model.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dijit\tree\TreeStoreModel.js"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="dojox"

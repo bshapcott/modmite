@@ -45,15 +45,15 @@ Transaction *db_transaction_new(request_rec *r) {
 }
 
 //____________________________________________________________________________
-/// \todo - connection pooling
+/// @todo - connection pooling
 void db_start(Transaction *xn) {
   int rc;
-  // \todo - bounds check
+  /// @todo - bounds check
   if (xn->scratch[1]) {
     strcat(xn->scratch, ".db");
   };
-  // \todo - fstat first and fail if does not exist!
-  // \todo - db pool
+  /// @todo - fstat first and fail if does not exist!
+  /// @todo - db pool
   xn->sql_count = xn->stmt_count = 0;
   rc = sqlite3_open(&xn->scratch[1], &xn->db);
   if (xn->scratch[1]) {

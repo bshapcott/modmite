@@ -6,10 +6,11 @@
 /// @file
 ///
 /// - access request header elements as a virtual table
-/// \todo - when db is pooled, need to know current user to get transaction
+///
+/// @todo - when db is pooled, need to know current user to get transaction
 ///         info (make ptr in db pool entry, set when owner gets resource,
 ///         unset when resource released)
-/// \todo - is env access required?
+/// @todo - is env access required?
 
 
 #include <httpd.h>

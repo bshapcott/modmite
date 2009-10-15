@@ -25,8 +25,8 @@
 			>
 			<Tool
 				Name="VCNMakeTool"
-				BuildCommandLine="cd $(InputDir)&#x0D;&#x0A;sqlite3 -echo C:/Apache22/bin/game.db &quot;.read agile.sql&quot;&#x0D;&#x0A;"
-				ReBuildCommandLine="cd $(InputDir)&#x0D;&#x0A;sqlite3 -echo C:/Apache22/bin/game.db &quot;.read agile.sql&quot;"
+				BuildCommandLine="cd $(InputDir)&#x0D;&#x0A;sqlite3 -echo C:/Apache22/bin/game.db &quot;.read game.sql&quot;&#x0D;&#x0A;"
+				ReBuildCommandLine="cd $(InputDir)&#x0D;&#x0A;sqlite3 -echo C:/Apache22/bin/game.db &quot;.read game.sql&quot;"
 				CleanCommandLine="del C:\Apache22\bin\game.db"
 				Output="C:\Apache22\bin\game.db"
 				PreprocessorDefinitions=""

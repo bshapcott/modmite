@@ -18,7 +18,7 @@ static int xConnect(sqlite3 *db, void *pAux, int argc, const char * const *argv,
                    sqlite3_vtab **ppVTab, char **c)
 {
    int rc;
-  // \todo - no local bufs
+   /// @todo - no local bufs
   char buf[1024];
   *buf = '\0';
   strcat(buf, "CREATE TABLE ");
@@ -122,7 +122,7 @@ static int xEof(cursor *c) {
 
 //_____________________________________________________________________________
 static int xColumn(cursor *c, sqlite3_context *ctxt, int i) {
-  /// \todo - stack buf
+  /// @todo - stack buf
   char buf[16];
   char *txt;
   double v = c->floor + c->step * c->row;
