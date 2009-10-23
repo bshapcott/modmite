@@ -1,4 +1,5 @@
 #summary Instructions for manually building modmite.
+#labels Featured
 
 modmite is pre-release and in active development.
 
