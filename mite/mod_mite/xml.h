@@ -21,8 +21,8 @@ output_callbacks xml_ocb;
 ///   Apache)
 /// - the XML in turn is mapped to database operations, and the results
 ///   of the database operations used to create the HTTP response
-/// - XML permits the same tag element to appear multiple times within the
-//    same context
+/// - XML permits the same tag element to appear multiple times at the same
+///   level
 void xml_parse(Transaction *xn, const char *buf, apr_size_t len);
 
 #endif

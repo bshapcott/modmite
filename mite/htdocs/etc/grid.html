@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+	<script type="text/javascript" src="/js/dojo-release-1.3.2-src/dojo/dojo.js" djConfig="debugAtAllCosts:true, isDebug: true, parseOnLoad: false, dojoIframeHistoryUrl:'/js/dojo-release-1.3.2-src/dojo/resources/iframe_history.html'">
+	</script>
+  <style type="text/css">
+    @import "/js/dojo-release-1.3.2-src/dojox/grid/resources/Grid.css";
+    @import "/js/dojo-release-1.3.2-src/dojox/grid/resources/tundraGrid.css";
+    .dojoxGrid table { margin: 0; } html, body { width: 100%; height: 100%;
+    margin: 0; }
+  </style>
+</head>
+<body class="nihilo">
+  <p>Page for experimenting with dojox.grid.DataGrid.</p>
+  <p>Try some other content before the DIV.</p>
+  <div id="gridContainer4" style="width:50%;height:50%">
+  </div>
+  <p>And some more after!</p>
+  <script type="text/javascript">
+    dojo.require("dojox.grid.DataGrid");
+    dojo.require("dojox.data.CsvStore");
+
+    dojo.addOnLoad(function() {
+    // our test data store for this example:
+    var store4 = new dojox.data.CsvStore({
+    url: '/js/dojo-release-1.3.2-src/dojox/grid/tests/support/movies.csv'
+    });
+
+    // set the layout structure:
+    var layout4 = [{
+      field: 'Title',
+      name: 'Title of Movie',
+      width: '200px'
+    },
+    {
+      field: 'Year',
+      name: 'Year',
+      width: '200px'
+    },
+    {
+      field: 'Producer',
+      name: 'Producer',
+      width: '300px'
+    }];
+
+    // create a new grid:
+    var grid4 = new dojox.grid.DataGrid({
+      query: {Title: '*'},
+      store: store4,
+      clientSort: true,
+      rowSelector: '20px',
+      structure: layout4,
+      id: "grid4",
+      rowCount: 14
+    });
+
+    // append the new grid to the div "gridContainer4":
+    dojo.byId("gridContainer4").appendChild(grid4.domNode);
+
+    // Call startup, in order to render the grid:
+    grid4.startup();
+    grid4.resize(1000, 250);
+    
+    });
+  </script>
+</body>
+</html>

@@ -66,10 +66,14 @@
 			Name="js"
 			>
 			<Filter
-				Name="ch"
+				Name="mite"
 				>
 				<File
-					RelativePath=".\js\dojo-release-1.3.0\ch\TreeModel.js"
+					RelativePath=".\js\dojo-release-1.3.2-src\mite\MiteStore.js"
+					>
+				</File>
+				<File
+					RelativePath=".\js\dojo-release-1.3.2-src\mite\TreeModel.js"
 					>
 				</File>
 			</Filter>
@@ -330,6 +334,54 @@
 						</File>
 					</Filter>
 				</Filter>
+				<Filter
+					Name="dnd"
+					>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojo\dnd\autoscroll.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojo\dnd\Avatar.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojo\dnd\common.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojo\dnd\Container.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojo\dnd\Manager.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojo\dnd\move.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojo\dnd\Moveable.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojo\dnd\Mover.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojo\dnd\Selector.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojo\dnd\Source.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojo\dnd\TimedMoveable.js"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="dijit"
@@ -457,6 +509,10 @@
 					</File>
 					<File
 						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\layout\TabContainer.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dijit\layout\TabController.js"
 						>
 					</File>
 				</Filter>
@@ -680,6 +736,10 @@
 					</File>
 					<File
 						RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dojox\data\SnapLogicStore.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojox\data\StoreExplorer.js"
 						>
 					</File>
 					<File
@@ -911,6 +971,10 @@
 		</Filter>
 		<File
 			RelativePath=".\ch.html"
+			>
+		</File>
+		<File
+			RelativePath=".\grid.html"
 			>
 		</File>
 		<File
