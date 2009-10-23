@@ -199,7 +199,9 @@ INSERT INTO query (name, stmt)
 -- - propose a move
 INSERT INTO query (name, stmt)
 	VALUES ('game_move',
-	"INSERT INTO move (piece, x, y) VALUES ($piece, $x, $y);");
+	"SELECT session.id AS sid, query AS qid FROM session, scope
+		WHERE scope.id = $scid AND session.id = session;
+	 INSERT INTO move (piece, x, y) VALUES ($piece, $x, $y);");
 
 --
 INSERT INTO query (name, stmt)
