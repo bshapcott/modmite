@@ -55,7 +55,7 @@ void sql_parse(Transaction *xn, char const *buf, apr_size_t len) {
 //____________________________________________________________________________
 void sql_get(Transaction *xn) {
    sqlite3_stmt *stmt = NULL;
-   int rc = sqlite3_prepare_v2(xn->db, "SELECT stmt FROM query WHERE name = ?",
+   int rc = sqlite3_prepare_v2(xn->db, "SELECT stmt FROM sql WHERE name = ?",
                                -1, &stmt, NULL);
    sqlite3_bind_text(stmt, 1, xn->name, -1, SQLITE_TRANSIENT);
    while (sqlite3_step(stmt) == SQLITE_ROW) {

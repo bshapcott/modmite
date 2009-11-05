@@ -77,13 +77,10 @@ function mite_send_data(data, accept, cb) {
 	xhr.setRequestHeader("Content-Type", mime_type);
 	xhr.setRequestHeader("Accept", accept);
 	xhr.send(data);
-    return;
 }
 
 //______________________________________________________________________________
-function mite() {
-	return;
-}
+function mite() {}
 
 //______________________________________________________________________________
 mite.prototype.getChildrenByName = function mite_getChildrenByName(name) {
@@ -109,6 +106,12 @@ mite.prototype.mayHaveChildren = function mite_mayHaveChildren() {
 }
 
 //_______________________________________________________________________________
+// - more like a Java-style listener, attempts to send all events on the API,
+//   as long as the listener has a corresponding method, and doesn't support
+//   function-style callbacks (use an anonymous object instead)
+// - this is somewhat internal, and meant to bind in to the event system of
+//   whatever JavaScript library is being employed (e.g. Dojo, upon which the
+//   APIs are based, but not dependent)
 mite.prototype.addEventListener = function mite_addEventListener(listener) {
 	if (!this.listener) {
 		this.listener = [];
@@ -128,100 +131,65 @@ mite.prototype.removeEventListener = function mite_removeEventListener(listener)
 }
 
 //______________________________________________________________________________
-// - rolled up child changes (new, delete on children)
+mite.prototype.fireEvent = function mite_fireEvent(event, args) {
+	if (this.listener && this.listener.length > 0) {
+		for (var i = 0; i < this.listener.length; i++) {
+			if (this.listener[i][event]
+				&&
+				typeof this.listener[i][event] === "function")
+			{
+				this.listener[i][event].apply(this.listener[i], args);
+			}
+		}
+	}
+	// - bubble up
+	if (this.element.parentNode.mite) {
+		this.element.parentNode.mite[event].apply(this.element.parentNode.mite, args);
+	}
+}
+
+//______________________________________________________________________________
+// - rolled up child changes (new, delete on children), fired after ALL changes
+//   have been applied
+// - based, but not dependent on, Dojo APIs
 // @see dijit.tree.model
 mite.prototype.onChildrenChange = function mite_onChildrenChange(parent) {
-	if (this.listener && this.listener.length > 0) {
-		var c = parent.mite.getChildren();
-		for (var i = 0; i < this.listener.length; i++) {
-			if (this.listener[i].onChildrenChange
-				&&
-				typeof this.listener[i].onChildrenChange === "function")
-			{
-				this.listener[i].onChildrenChange(parent, c);
-			}
-		}
-	}
-	if (this.element.parentNode.mite) {
-		this.element.parentNode.mite.onChildrenChange(parent);
-	}
+	this.fireEvent("onChildrenChange", arguments);
 }
 
 //______________________________________________________________________________
-// - fine grained item attribute changes
+// - fine grained item attribute changes, fired as EACH INDIVIDUAL attribute
+//   is changed
+// - based, but not dependent on, Dojo APIs
 // @see dojo.data.api.Notification
 mite.prototype.onSet = function mite_onSet(element, attr, oval, nval) {
-	if (this.listener && this.listener.length > 0) {
-		for (var i = 0; i < this.listener.length; i++) {
-			if (this.listener[i].onSet
-				&&
-				typeof this.listener[i].onSet === "function")
-			{
-				this.listener[i].onSet(element, attr, oval, nval);
-			}
-		}
-	}
-	if (this.element.parentNode.mite) {
-		this.element.parentNode.mite.onSet(element, attr, oval, nval);
-	}
+	this.fireEvent("onSet", arguments);
 }
 
 //______________________________________________________________________________
-// - rolled up item attribute changes
+// - rolled up item attribute changes, fired after ALL attribute changes
+//   have been applied
+// - based, but not dependent on, Dojo APIs
 // @see dijit.tree.model
 mite.prototype.onChange = function mite_onChange(element) {
-	if (this.listener && this.listener.length > 0) {
-		for (var i = 0; i < this.listener; i++) {
-			if (this.listener[i].onChange
-				&&
-				typeof this.listener[i].onChange === "function")
-			{
-				this.listener[i].onChange(element);
-			}
-		}
-	}
-	if (this.element.parentNode.mite) {
-		this.element.parentNode.mite.onChange(element);
-	}
+	this.fireEvent("onChange", arguments);
 }
 
 //______________________________________________________________________________
-// - fine grained child creation notification
+// - fine grained child creation notification, fired as EACH child is created
+// - based, but not dependent on, Dojo APIs
 // @see dijit.tree.model
 // @see dojo.data.api.Notification
 mite.prototype.onNew = function mite_onNew(element) {
-	if (this.listener && this.listener.length > 0) {
-		for (var i = 0; i < this.listener; i++) {
-			if (this.listener.onNew
-				&&
-				typeof this.listener[i].onNew === "function")
-			{
-				this.listener[i].onNew(element);
-			}
-		}
-	}
-	if (this.element.parentNode.mite) {
-		this.element.parentNode.mite.onNew(element);
-	}
+	this.fireEvent("onNew", arguments);
 }
 
 //______________________________________________________________________________
-// - fine grained child delete notification
+// - fine grained child delete notification, fired as EACH child is deleted
+// - based, but not dependent on, Dojo APIs
 // @see dojo.data.api.Notification
 mite.prototype.onDelete = function mite_onDelete(element) {
-	if (this.listener && this.listener.length > 0) {
-		for (var i = 0; i < this.listener; i++) {
-			if (this.listener.onDelete
-				&&
-				typeof this.listener[i].onDelete === "function")
-			{
-				this.listener[i].onDelete(element);
-			}
-		}
-	}
-	if (this.element.parentNode.mite) {
-		this.element.parentNode.mite.onDelete(element);
-	}
+	this.fireEvent("onDelete", arguments);
 }
 
 //______________________________________________________________________________
@@ -329,8 +297,11 @@ function mite_find_or_create(id, type, parent, ctor) {
 		if (t) {
 			e.title = t[0];
 		}
+		// @todo - parentInfo per data.api.Notification
+		e.mite.onNew(e);
 		if (parent && parent.mite) {
-			parent.mite.onChildrenChange(parent);
+			// @todo - roll up deltas on parent
+			parent.mite.onChildrenChange(parent, parent.mite.getChildren());
 		}
 	}
 	return e;
@@ -397,6 +368,7 @@ function mite_lookup(table, nvp) {
 
 //_____________________________________________________________________________
 // - return the column indices of the table's primary keys
+// @todo - use metadata tables, don't rely on tfoot
 function mite_pk_indices(table) {
 	var tfoot = table.getElementsByTagName("tfoot");
 	if (tfoot.length === 0) {
@@ -420,6 +392,7 @@ function mite_pk_indices(table) {
 
 //_____________________________________________________________________________
 // - find a row in the table with the same matching primary key(s)
+// @todo - use metadata tables, not thead
 function mite_pk_lookup(table, row) {
 	var thead = table.getElementsByTagName("thead");
 	if (thead.length === 0) {
@@ -439,6 +412,15 @@ function mite_pk_lookup(table, row) {
 }
 
 //_____________________________________________________________________________
+function mite_column_name(table, index) {
+	var thead = table.getElementsByTagName("thead");
+	if (thead.length === 0) {
+		return index;
+	}
+	return thead[0].getElementsByTagName("tr")[6].getElementsByTagName("td")[index].innerHTML;
+}
+
+//_____________________________________________________________________________
 // - convert server data to HTML microformat
 function mite_microformat(qid, table, db, sql, stmt, rows) {
 	var caption = table.getElementsByTagName("caption");
@@ -451,6 +433,7 @@ function mite_microformat(qid, table, db, sql, stmt, rows) {
 	if (tbody.length === 0) {
 		tbody = [mite_create_element("tbody", table, mite_rows)];
 	}
+	var rc = false;
 	for (var row in rows) {
 		var r = rows[row];
 		var p = mite_pk_lookup(table, r);
@@ -458,26 +441,36 @@ function mite_microformat(qid, table, db, sql, stmt, rows) {
 		// @todo - check at most one member of 'p'
 		if (p.length > 0) {
 			tr = p[0];
+			var cc = false;
 			var td = tr.getElementsByTagName("td");
 			var i = 0;
 			for (var c in r) {
-				var delta = td[i] != r[c];
-				td[i].innerHTML = r[c];
+				var delta = td[i].innerHTML != r[c];
 				if (delta) {
-					td[i].mite.onChange(td[i]);
+					var old = td[i].innerHTML;
+					td[i].innerHTML = r[c];
+					cc = true;
+					tr.mite.onSet(tr, mite_column_name(table, i), old, r[c]);
 				}
 				i++;
-			}			
+			}
+			if (cc) {
+				tr.mite.onChange(tr);
+			}
 		} else {
+			rc = true;
 			tr = mite_create_element("tr", tbody[0], mite_row);
 			for (var c in r) {
 				var td = mite_create_element("td", tr, mite_cell);
 				td.setAttribute("class", "mite");
 				td.innerHTML = r[c];
 			}
+			tr.mite.onNew(tr);
 		}
 	} // row
-	return;
+	if (rc) {
+		tbody[0].mite.onChildrenChange(tbody[0], tbody[0].mite.getChildren());
+	}
 }
 
 //_____________________________________________________________________________
@@ -525,12 +518,12 @@ function mite_metasql(qid, table, db, sql, stmt) {
 			td.innerHTML = t.length > 0 ? t[0][j] : "";
 		}
 	}
-	return;
 }
 
 //_____________________________________________________________________________
 // - returns the result column names (NOT necessarily the table column names,
 //   if AS was used in the SQL)
+// @todo - use metadata tables, not thead
 function mite_column_names(table) {
 	var c;
 	var thead = table.getElementsByTagName("thead");
@@ -577,7 +570,6 @@ function mite_id(table) {
 			td[col].title = cn ? cn[col] : col;
 		}
 	}
-	return;
 }
 
 //_____________________________________________________________________________
@@ -643,7 +635,18 @@ function mite_eval_o(data) {
 		console.warn(e);
 		console.debug(e.stack);
 	}
-	return;
+}
+
+//__________________________________________________________________________
+function mite_send_eval(data, fn) {
+  mite_send_data(data, "application/json", function (xhr) {
+    if (xhr.readyState == 4) {
+	  mite_eval_o(xhr.responseText);
+	  if (fn) {
+		fn();
+	  }
+    }
+  });
 }
 
 //__________________________________________________________________________
@@ -653,29 +656,17 @@ function mite_scratch_test(funcs) {
 	throw new Error("empty funcs");
   }
   var data = (funcs.shift())();
-  // var input = dijit.byId("input");
-  // input.attr("value", data);
   mite_send_data(data, "application/json", function (xhr) {
     if (xhr.readyState == 4) {
-      // var output = dijit.byId("output");
-      // output.attr("value", xhr.responseText);
 	  mite_eval_o(xhr.responseText);
       if (funcs.length > 0) mite_scratch_test(funcs);
     }
   });
-  return;
-}
-
-//__________________________________________________________________________
-function mite_poll_test(query) {
-	mite_scratch_test([query]);
-	return;
 }
 
 //__________________________________________________________________________
 function mite_poll(query) {
-	setInterval(mite_poll_test, 4000, query);
-	return;
+	return setInterval(function (q) {mite_scratch_test([q]);}, 4000, query);
 }
 
 //_________________________________________________________________________ EOF
