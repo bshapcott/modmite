@@ -69,6 +69,14 @@
 				Name="mite"
 				>
 				<File
+					RelativePath=".\js\dojo-release-1.3.2-src\mite\CardWall.js"
+					>
+				</File>
+				<File
+					RelativePath=".\js\dojo-release-1.3.2-src\mite\Data.js"
+					>
+				</File>
+				<File
 					RelativePath=".\js\dojo-release-1.3.2-src\mite\MiteStore.js"
 					>
 				</File>
@@ -441,6 +449,30 @@
 				</File>
 				<File
 					RelativePath="..\htdocs\js\dojo-release-1.3.2-src\dijit\Menu.js"
+					>
+				</File>
+				<File
+					RelativePath=".\js\dojo-release-1.3.2-src\dijit\MenuBar.js"
+					>
+				</File>
+				<File
+					RelativePath=".\js\dojo-release-1.3.2-src\dijit\MenuBarItem.js"
+					>
+				</File>
+				<File
+					RelativePath=".\js\dojo-release-1.3.2-src\dijit\MenuItem.js"
+					>
+				</File>
+				<File
+					RelativePath=".\js\dojo-release-1.3.2-src\dijit\MenuSeparator.js"
+					>
+				</File>
+				<File
+					RelativePath=".\js\dojo-release-1.3.2-src\dijit\PopupMenuBarItem.js"
+					>
+				</File>
+				<File
+					RelativePath=".\js\dojo-release-1.3.2-src\dijit\PopupMenuItem.js"
 					>
 				</File>
 				<File
@@ -895,6 +927,54 @@
 						</File>
 					</Filter>
 				</Filter>
+				<Filter
+					Name="layout"
+					>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojox\layout\BorderContainer.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojox\layout\ContentPane.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojox\layout\DragPane.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojox\layout\ExpandoPane.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojox\layout\FloatingPane.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojox\layout\GridContainer.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojox\layout\RadioGroup.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojox\layout\ResizeHandle.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojox\layout\RotatorContainer.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojox\layout\ScrollPane.js"
+						>
+					</File>
+					<File
+						RelativePath=".\js\dojo-release-1.3.2-src\dojox\layout\ToggleSplitter.js"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -910,6 +990,10 @@
 			</File>
 			<File
 				RelativePath=".\etc\countries.json"
+				>
+			</File>
+			<File
+				RelativePath=".\etc\grid.html"
 				>
 			</File>
 			<File
@@ -930,6 +1014,10 @@
 			</File>
 			<File
 				RelativePath=".\etc\map.html"
+				>
+			</File>
+			<File
+				RelativePath=".\etc\popup.html"
 				>
 			</File>
 			<File
@@ -971,10 +1059,6 @@
 		</Filter>
 		<File
 			RelativePath=".\ch.html"
-			>
-		</File>
-		<File
-			RelativePath=".\grid.html"
 			>
 		</File>
 		<File

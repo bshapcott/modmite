@@ -188,7 +188,7 @@ static int xFilter_bind(cursor *c, int idxNum, const char *idxStr,
   int r;
   sqlite3_stmt *stmt[2];
   sqlite3_prepare_v2(((vtab *)c->base.pVtab)->db,
-                     "SELECT name, stmt FROM query",
+                     "SELECT name, stmt FROM sql",
                      -1, &stmt[0], NULL);
   while (SQLITE_ROW == sqlite3_step(stmt[0])) {
     char const *name = apr_pstrdup(c->pool, sqlite3_column_text(stmt[0], 0));
@@ -265,7 +265,7 @@ static int xFilter_sql(cursor *c, int idxNum, const char *idxStr,
 {
   sqlite3_stmt *stmt[2];
   sqlite3_prepare_v2(((vtab *)c->base.pVtab)->db,
-    "SELECT name, stmt FROM query",
+    "SELECT name, stmt FROM sql",
     -1, &stmt[0], NULL);
   while (SQLITE_ROW == sqlite3_step(stmt[0])) {
     apr_array_header_t *row;

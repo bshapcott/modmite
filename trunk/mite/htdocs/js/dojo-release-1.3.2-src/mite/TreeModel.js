@@ -8,6 +8,7 @@ dojo.provide("mite.TreeModel");
 //_____________________________________________________________________________
 // - based on dijit.tree.TreeStoreModel, but doesn't require dijit/Tree.js
 //   to be loaded
+// @todo - make pseudo-root, allow models to be grafted
 dojo.declare(
 	"mite.TreeModel",
 	null,

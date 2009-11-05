@@ -130,19 +130,6 @@ CREATE TABLE move (
 	y INTEGER NOT NULL,
 	created DATE DEFAULT (CURRENT_TIMESTAMP),
 	updated DATE DEFAULT (CURRENT_TIMESTAMP) );
-		
-CREATE TRIGGER move_updated AFTER INSERT ON move
-BEGIN
-	UPDATE move SET updated = datetime('now') WHERE id = new.id;
-END;
-
-DROP TABLE IF EXISTS query;
-CREATE TABLE query (
-	id INTEGER PRIMARY KEY NOT NULL,
-	name 'text/plain',
-	stmt 'application/x-sql',
-	created DATE DEFAULT (CURRENT_TIMESTAMP),
-	updated DATE DEFAULT (CURRENT_TIMESTAMP) );
 
 DROP TABLE IF EXISTS scope;
 CREATE TABLE scope (
@@ -150,19 +137,33 @@ CREATE TABLE scope (
 	session INTEGER REFERENCES session(id) NOT NULL,
 	query INTEGER,
 	board REFERENCES board(id),
-	time DATE DEFAULT (0) );
+	sequence INTEGER DEFAULT (0),
+	time DATE INTEGER DEFAULT(0) );
+
+CREATE TRIGGER move_updated AFTER INSERT ON move
+BEGIN
+	UPDATE move SET updated = datetime('now') WHERE id = new.id;
+END;
+
+DROP TABLE IF EXISTS sql;
+CREATE TABLE sql (
+	id INTEGER PRIMARY KEY NOT NULL,
+	name 'text/plain',
+	stmt 'application/x-sql',
+	created DATE DEFAULT (CURRENT_TIMESTAMP),
+	updated DATE DEFAULT (CURRENT_TIMESTAMP) );
 
 -- - metadata for stored SQL
-INSERT INTO query (name, stmt)
+INSERT INTO sql (name, stmt)
 	VALUES ('meta',
-	"SELECT session.id AS sid, i AS qid FROM session, literal WHERE session.id = $sid AND i=$qid;
+	"SELECT i AS qid FROM literal WHERE i=$qid;
 	 SELECT * FROM metasql;
 	 SELECT * FROM metatable WHERE tbl IN ('metasql', 'metabinding', 'metatable', 'metaforeign', 'literal', 'session', 'scope', 'piece', 'board', 'piece_type', 'move');
 	 SELECT * FROM metabinding;
 	 SELECT * FROM metaforeign;");
 
 --
-INSERT INTO query (name, stmt)
+INSERT INTO sql (name, stmt)
 	VALUES ('session_start',
 	"INSERT INTO session (id) VALUES (null);
 	 SELECT session.id AS sid, i AS qid FROM session, literal
@@ -170,7 +171,7 @@ INSERT INTO query (name, stmt)
 		AND i = $qid;");
 
 -- set up a new game
-INSERT INTO query (name, stmt)
+INSERT INTO sql (name, stmt)
 	VALUES ('game_start',
 	"SELECT session.id AS sid, i AS qid FROM session, literal WHERE session.id = $sid AND i=$qid;
 	 INSERT INTO board (id) VALUES (null);
@@ -189,7 +190,7 @@ INSERT INTO query (name, stmt)
 		AND board.id = piece.board;");
 
 -- get current game state
-INSERT INTO query (name, stmt)
+INSERT INTO sql (name, stmt)
 	VALUES ('game_state',
 	"SELECT session.id AS sid, i AS qid FROM session, literal WHERE session.id = $sid AND i=$qid;
 	 SELECT * FROM board WHERE id = $board;
@@ -197,14 +198,14 @@ INSERT INTO query (name, stmt)
 	 SELECT * FROM piece_type;");
 
 -- - propose a move
-INSERT INTO query (name, stmt)
+INSERT INTO sql (name, stmt)
 	VALUES ('game_move',
 	"SELECT session.id AS sid, query AS qid FROM session, scope
 		WHERE scope.id = $scid AND session.id = session;
 	 INSERT INTO move (piece, x, y) VALUES ($piece, $x, $y);");
 
 --
-INSERT INTO query (name, stmt)
+INSERT INTO sql (name, stmt)
 	VALUES ('game_scope',
 	"SELECT session.id AS sid, i AS qid FROM session, literal WHERE session.id = $sid AND i=$qid;
 	 INSERT OR REPLACE INTO scope (id, session, query, board)
@@ -212,7 +213,7 @@ INSERT INTO query (name, stmt)
 			$sid, $qid, $board);
 	 SELECT id AS scid FROM scope WHERE id = last_insert_rowid();");
 
-INSERT INTO query (name, stmt)
+INSERT INTO sql (name, stmt)
 	VALUES ('game_check',
 	"SELECT session.id AS sid, query AS qid FROM session, scope
 		WHERE scope.id = $scid AND session.id = session;
@@ -227,7 +228,7 @@ INSERT INTO query (name, stmt)
 		WHERE scope.id = $scid;");
 
 -- 
-INSERT INTO query (name, stmt)
+INSERT INTO sql (name, stmt)
 	VALUES ('game_delta',
 	"SELECT session.id AS sid, query AS qid FROM scope, session
 		WHERE scope.id = $scid AND session.id = session;
