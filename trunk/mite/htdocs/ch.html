@@ -21,27 +21,37 @@
 </body>
 <script type="text/javascript">
   dojo.addOnLoad( function() {
+    dojo.require("mite.Data");
 
-    mite_init();
+    var d1 = new mite.Data({id: 1});
+    d1.attr("query", {mite: {game: [{meta: {qid: d1.id}}, {session_start: {qid: d1.id}}]}});
+    dojo.body().appendChild(d1.domNode);
 
-    // @todo - UI construction from data source
-    ui_make_the_ui();
+    function get_session() {return mite_get_session(d1.id);}
 
-    mite_scratch_test([
-        function () {return "/mite/game/meta?qid=999";},
-        function () {return "/mite/game/session_start?qid=999";},
-        function () {return "/mite/game/game_start?qid=999&sid=" + mite_get_session(999);},
-        function () {return "/mite/game/game_state?qid=999&sid=" + mite_get_session(999) + "&board="
-          + mite_get_cell("999.game.game_start.7", 0, 0);},
-        function () {return "/mite/game/game_scope?qid=999&sid=" + mite_get_session(999) + "&board="
-          + mite_get_cell("999.game.game_start.7", 0, 0);},
-        function () {return "/mite/game/game_move?x=10&y=10"
-          + "&piece=" + mite_get_cell("999.game.game_state.2", 0, 0)
-          + "&scid=" + mite_get_cell("999.game.game_scope.2", 0, 0);},
-        function () {return "/mite/game/game_move?x=25&y=25"
-          + "&piece=" + mite_get_cell("999.game.game_state.2", 1, 0)
-          + "&scid=" + mite_get_cell("999.game.game_scope.2", 0, 0);}
+    var d2 = new mite.Data({id:999});
+    d2.attr("query",
+      [
+        {mite: {game: [
+          {meta: {qid: d2.id}},
+          {game_start: {qid: d2.id, sid: get_session}}]}},
+        {mite: {game: [
+          {game_state: {qid: d2.id, sid: get_session,
+            board: function() {return mite_get_cell("999.game.game_start.7", 0, 0)}}},
+          {game_scope: {qid: d2.id, sid: get_session,
+            board: function() {return mite_get_cell("999.game.game_start.7", 0, 0)}}}]}},
+        {mite: {game: [
+          {game_move: {x: 10, y: 10,
+            piece: function() {return mite_get_cell("999.game.game_state.2", 0, 0)},
+            scid: function() {return mite_get_cell("999.game.game_scope.2", 0, 0)}}},
+          {game_move: {x: 25, y: 25,
+            piece: function() {return mite_get_cell("999.game.game_state.2", 1, 0)},
+            scid: function() {return mite_get_cell("999.game.game_scope.2", 0, 0)}}}]}}
       ]);
+    dojo.body().appendChild(d2.domNode);
+    dojo.connect(d2, "onQueryComplete", null, "ui_make_the_ui");
+    d2.connect(d1, "onQueryComplete", "startup");
+    d1.startup();
   }); // dojo.addOnLoad
 </script>
 </html>

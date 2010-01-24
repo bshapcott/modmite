@@ -134,7 +134,7 @@ static void xml_character_data(void *u, const XML_Char *s, int len) {
 /// @param loc - location (Apache directory)
 static void xml_root_start(Transaction *xn, char const *loc) {
    ap_set_content_type(xn->request, "text/xml;charset=ascii");
-   ap_rprintf(xn->request, "<result built=\"" __DATE__ " " __TIME__ "\" loc=\"%s\">",
+   ap_rprintf(xn->request, "<mite built=\"" __DATE__ " " __TIME__ "\" loc=\"%s\">",
               loc ? loc : "NONE");
    return;
 }
@@ -144,7 +144,7 @@ static void xml_root_start(Transaction *xn, char const *loc) {
 /// - closes the root element
 /// @param xn - the transaction information associated with the HTTP request
 static void xml_root_end(Transaction *xn) {
-   ap_rputs("</result>", xn->request);
+   ap_rputs("</mite>", xn->request);
    return;
 }
 

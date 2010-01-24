@@ -93,8 +93,8 @@ typedef struct output_callbacks {
 struct Transaction {
   /// - HTTP request record from Apache
   request_rec *request;
-  /// - multiple output formats are supported; callbacks are a form of
-  ///   polymorphism
+  /// - multiple output formats are supported
+  /// - callbacks are a form of polymorphism
   output_callbacks *ocb;
   /// - connection to sqlite database
   /// @todo - should come from a connection pool
@@ -103,10 +103,9 @@ struct Transaction {
   apr_array_header_t *path;
   /// - SQL statements
   apr_array_header_t *statements;
-  /// @todo dox
+  /// - scratch buffer for names
   const char *name;
-  /// - transaction parameters, derived from URL query parameters, cookie
-  ///   (session only), or last inserted rowid
+  /// - transaction parameters
   apr_table_t *parameters;
   /// - parse level
   int level;
@@ -116,13 +115,16 @@ struct Transaction {
   char *parm;
   /// - database column
   int column;
-  /// - ???
+  /// - user data
   void *data;
-  /// - ???
+  /// - comment buffer
   char *comment;
   /// - SQL statement being executed was generated programatically
   char synthetic;
-  /// numbuer of SQL commands in database operation
+  /// - number of times databases are opened for this transaction
+  /// - each open operation counts, even if for a previously opened database
+  int db_count;
+  /// - number of SQL commands in database operation
   int sql_count;
   /// - number of statements to execute in SQL command
   int stmt_count;

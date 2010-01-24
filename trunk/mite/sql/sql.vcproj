@@ -25,10 +25,10 @@
 			>
 			<Tool
 				Name="VCNMakeTool"
-				BuildCommandLine="cd $(InputDir)&#x0D;&#x0A;sqlite3 -echo C:/Apache22/bin/game.db &quot;.read game.sql&quot;&#x0D;&#x0A;"
-				ReBuildCommandLine="cd $(InputDir)&#x0D;&#x0A;sqlite3 -echo C:/Apache22/bin/game.db &quot;.read game.sql&quot;"
-				CleanCommandLine="del C:\Apache22\bin\game.db"
-				Output="C:\Apache22\bin\game.db"
+				BuildCommandLine="cd $(InputDir)&#x0D;&#x0A;sqlite3 -echo C:/Apache22/bin/game.db &quot;.read game.sql&quot;&#x0D;&#x0A;sqlite3 -echo C:/Apache22/bin/simple.db &quot;.read simple.sql&quot;&#x0D;&#x0A;"
+				ReBuildCommandLine="cd $(InputDir)&#x0D;&#x0A;sqlite3 -echo C:/Apache22/bin/game.db &quot;.read game.sql&quot;&#x0D;&#x0A;sqlite3 -echo C:/Apache22/bin/simple.db &quot;.read simple.sql&quot;"
+				CleanCommandLine="del C:\Apache22\bin\game.db&#x0D;&#x0A;del C:\Apache22\bin\simple.db"
+				Output="C:\Apache22\bin\game.db,C:\Apache22\bin\game.db"
 				PreprocessorDefinitions=""
 				IncludeSearchPath=""
 				ForcedIncludes=""
@@ -64,6 +64,10 @@
 	<Files>
 		<File
 			RelativePath=".\game.sql"
+			>
+		</File>
+		<File
+			RelativePath=".\simple.sql"
 			>
 		</File>
 	</Files>

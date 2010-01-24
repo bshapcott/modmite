@@ -188,6 +188,7 @@ function ui_card_wall(item) {
 				closable: true,
 				store: store });
 			var data = new mite.Data({id: 9999, title: 9999});
+			data.attr('query', {mite:{game:{meta:{qid: data.id}}}});
 			cardwall.containerNode.appendChild(data.domNode);
 			var tabcon = dijit.byId("tabcon");
 			tabcon.addChild(cardwall);
@@ -235,11 +236,27 @@ function ui_banner(parent) {
 		popup: sm}));
 	sm = new dijit.Menu({});
 	sm.addChild(new dijit.MenuItem({
-		label: "Edit item #1"}));
+		label: "Test Case #1",
+		onClick: function() {
+			var input = dojo.byId("input");
+			if (input) {
+				input.value = mite_to_json(
+					{mite:[{game:[{piece_type:{id:1}}, {piece_type:{id:2}}]}, {simple: {pet: {} } }]}
+				);
+			}
+		} }));
 	sm.addChild(new dijit.MenuItem({
-		label: "Edit item #2"}));
+		label: "Test Case #2",
+		onClick: function() {
+			var input = dojo.byId("input");
+			if (input) {
+				input.value = mite_to_json(
+					{mite: {game: {piece_type: {id: 1} } } , more: {simple: {pet: {} } } }
+				);
+			}
+		} }));
 	mb.addChild(new dijit.PopupMenuBarItem({
-		label: "Edit",
+		label: "Test",
 		popup: sm}));
 	banner.domNode.appendChild(mb.domNode);
 	banner.startup();

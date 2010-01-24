@@ -38,9 +38,11 @@ Transaction *db_transaction_new(request_rec *r) {
     xn->ocb = &xml_ocb;
   }
   xn->synthetic = 0;
+  xn->db_count = 0;
   xn->sql_count = xn->stmt_count = 0;
   xn->data = NULL;
   xn->comment = NULL;
+  xn->db = NULL;
   return xn;
 }
 
@@ -54,6 +56,7 @@ void db_start(Transaction *xn) {
   };
   /// @todo - fstat first and fail if does not exist!
   /// @todo - db pool
+  xn->db_count++;
   xn->sql_count = xn->stmt_count = 0;
   rc = sqlite3_open(&xn->scratch[1], &xn->db);
   if (xn->scratch[1]) {
@@ -76,6 +79,7 @@ void db_end(Transaction *xn) {
   if (xn->db) {
     sqlite3_close(xn->db);
   }
+  xn->db = NULL;
   (*xn->ocb->db_end)(xn);
   return;
 }
