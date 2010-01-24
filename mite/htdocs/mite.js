@@ -46,7 +46,10 @@ function mite_send_data(data, accept, cb) {
 	// - auto-detect the MIME type of the input using extremely basic
 	//   heuristics, ignoring leading and trailing whitespace
 	var mime_type;
-	if (/^\s*\{/.test(data)) {
+	if (typeof data === "object") {
+		data = mite_to_json(data);
+		mime_type = "application/json";		
+	} else if (/^\s*\{/.test(data)) {
 		// - json is anything text starting with '{'
 		mime_type = "application/json";
 	} else if (/^\s*\</.test(data)) {
@@ -77,6 +80,46 @@ function mite_send_data(data, accept, cb) {
 	xhr.setRequestHeader("Content-Type", mime_type);
 	xhr.setRequestHeader("Accept", accept);
 	xhr.send(data);
+}
+
+//______________________________________________________________________________
+function mite_to_json(j) {
+	if (typeof j !== "object" || j instanceof Array) {
+		throw new Error("cannot convert non-object to JSON");
+	}
+	var s = "";
+	(function (j) {
+		if (typeof j === "object") {
+			if (j === null) {
+				s = s + "null";
+			} else if (j instanceof Array) {
+				s = s + "[";
+				var del = "";
+				for (var i =0; i < j.length; i++) {
+					s = s + del;
+					arguments.callee(j[i]);
+					del = ", ";
+				}
+				s = s + "]";
+			} else {
+				s = s + "{";
+				var del = "";
+				for (var a in j) {
+					s = s + del + '"' + a + '":';
+					arguments.callee(j[a]);
+					del = ", ";
+				}
+				s = s + "}";
+			}
+		} else if (typeof j === "function") {
+			arguments.callee(j());
+		} else if (typeof j === "string") {
+			s = s + '"' + j + '"';
+		} else {
+			s = s + j;
+		}
+	})(j);
+	return s;
 }
 
 //______________________________________________________________________________
@@ -263,14 +306,6 @@ function mite_cell(td) {
 
 //______________________________________________________________________________
 mite_cell.prototype = new mite();
-
-//______________________________________________________________________________
-// - create the DIV used as the root of the HTML microformat hierarchy
-function mite_init() {
-	var div = mite_find_or_create("mite", "div", document.body, mite_container);
-	div.style.display = "none";
-	mite_find_or_create(999, "div", div, mite_container);
-}
 
 //______________________________________________________________________________
 // - create a 'tag' element as a child of 'parent', and construct a new JS
@@ -594,7 +629,7 @@ function mite_get_session(qid) {
 // - DIV can be ground zero for connecting to other subsystems
 function mite_eval_o(data) {
 	try {
-		var it = eval("(" + data + ")");
+		var it = eval("(" + data + ")")["mite"];
 		// - convert JSON to microformat
 		for (var pass = 0; pass < 2; pass++) {
 			for (var dpad in it) {for (var db in it[dpad]) {
@@ -611,8 +646,7 @@ function mite_eval_o(data) {
 					if (!qid) {
 						qid = 0;
 					}
-					var div_top = mite_find_or_create("mite", "div", document.body, mite_container);
-					var div_query = mite_find_or_create(qid, "div", div_top, mite_container);
+					var div_query = mite_find_or_create(qid, "div", document.body, mite_container);
 					var div_sql = mite_find_or_create(qid + "." + db + "." + sql, "div", div_query, mite_sql);
 					for (var stmt in it[dpad][db][pad][sql]) {
 						var table = mite_find_or_create(qid + "." + db + "." + sql + "." + stmt,
@@ -638,28 +672,17 @@ function mite_eval_o(data) {
 }
 
 //__________________________________________________________________________
-function mite_send_eval(data, fn) {
+function mite_send_eval(data, fn, scope) {
   mite_send_data(data, "application/json", function (xhr) {
     if (xhr.readyState == 4) {
 	  mite_eval_o(xhr.responseText);
 	  if (fn) {
-		fn();
+		if (scope) {
+			fn.apply(scope);
+		} else {
+			fn();
+		}
 	  }
-    }
-  });
-}
-
-//__________________________________________________________________________
-// - quick & dirty scratch test
-function mite_scratch_test(funcs) {
-  if (funcs.length === 0) {
-	throw new Error("empty funcs");
-  }
-  var data = (funcs.shift())();
-  mite_send_data(data, "application/json", function (xhr) {
-    if (xhr.readyState == 4) {
-	  mite_eval_o(xhr.responseText);
-      if (funcs.length > 0) mite_scratch_test(funcs);
     }
   });
 }

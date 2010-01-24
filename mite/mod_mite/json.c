@@ -19,7 +19,9 @@
 static yajl_callbacks callbacks;
 
 enum {
-   /// - document root, the outer braces
+   /// - the outer braces
+   doc,
+   /// - root object
    root,
    /// - database level
    db,
@@ -162,10 +164,18 @@ static int json_number(void *u, char const *s, unsigned int n) {
 /// @param n - the number of bytes in key string (not characters)
 /// @return  - 1, to indicate to yajl that parsing should continue
 static int json_map_key(void *u, unsigned char const *k, unsigned int n) {
-   Transaction *xn = (Transaction *)u;
-   strncpy(&xn->scratch[1], (char const *)k, n);
-   xn->scratch[n+1] = 0;
-   return 1;
+  Transaction *xn = (Transaction *)u;
+  strncpy(&xn->scratch[1], (char const *)k, n);
+  xn->scratch[n+1] = 0;
+  if (xn->level == db && xn->db) {
+    // - new key at db level means changing databases
+    db_end(xn);
+    db_start(xn);
+  } else if (xn->level == root && xn->db_count > 0) {
+    // @todo - error?  can't have multiple roots if XML is the output!
+    (*xn->ocb->error)(xn, "additional top level keys ignored");
+  }
+  return 1;
 }
 
 //____________________________________________________________________________
@@ -178,15 +188,21 @@ static int json_map_key(void *u, unsigned char const *k, unsigned int n) {
 static int json_map_start(void *u) {
    Transaction *xn = (Transaction *)u;
    switch (xn->level) {
-   case root:
+   case doc:
       (*xn->ocb->root_start)(xn,
                              ((char **)xn->path->elts)[0]);
+      xn->level = root;
+      break;
+   case root:
       xn->level = db;
       break;
    case db:
-      db_start(xn);
-      xn->level = sql;
-      break;
+     /// @todo - move check into db_start?
+     if (!xn->db) {
+       db_start(xn);
+     }
+     xn->level = sql;
+     break;
    case sql:
       xn->name = &xn->scratch[1];
       db_sql_start(xn);
@@ -215,10 +231,13 @@ static int json_map_start(void *u) {
 static int json_map_end(void *u) {
    Transaction *xn = (Transaction *)u;
    switch (xn->level) {
+   case root:
+      (*xn->ocb->root_end)(xn);
+      xn->level = doc;
+      break;
    case db:
       db_end(xn);
       xn->level = root;
-      (*xn->ocb->root_end)(xn);
       break;
    case sql:
       xn->level = db;
@@ -250,6 +269,9 @@ static int json_map_end(void *u) {
 static int json_array_start(void *u) {
    Transaction *xn = (Transaction *)u;
    switch (xn->level) {
+   case root:
+   case db:
+      break;
    case sql:
       xn->name = &xn->scratch[1];
       db_sql_start(xn);
@@ -279,6 +301,9 @@ static int json_array_start(void *u) {
 static int json_array_end(void *u) {
    Transaction *xn = (Transaction *)u;
    switch (xn->level) {
+   case root:
+   case db:
+      break;
    case array:
       // - only happens with empty array
       db_bind_start(xn);
@@ -319,8 +344,9 @@ static yajl_callbacks callbacks =
 /// @param xn  - the transaction information associated with the HTTP request
 /// @param loc - location (Apache directory)
 static void json_root_start(Transaction *xn, char const *loc) {
-   ap_rputs("[{", xn->request);
-   return;
+  ap_set_content_type(xn->request, "application/json;charset=ascii");
+  ap_rputs("{\"mite\": [", xn->request);
+  return;
 }
 
 //____________________________________________________________________________
@@ -328,8 +354,8 @@ static void json_root_start(Transaction *xn, char const *loc) {
 /// - simply outputs a closing brace
 /// @param xn - the transaction information associated with the HTTP request
 static void json_root_end(Transaction *xn) {
-   ap_rputs("}]", xn->request);
-   return;
+  ap_rputs("\n]}", xn->request);
+  return;
 }
 
 //____________________________________________________________________________
@@ -341,10 +367,12 @@ static void json_root_end(Transaction *xn) {
 /// @param xn  - the transaction information associated with the HTTP request
 /// @param dbn - database name
 static void json_db_start(Transaction *xn, char const *dbn) {
-   // todo: compact output for JS
-   ap_set_content_type(xn->request, "application/json;charset=ascii");
-   ap_rprintf(xn->request, "\"%s\": [", dbn);
-   return;
+  // todo: compact output for JS
+  if (xn->db_count > 1) {
+    ap_rprintf(xn->request, ",\n");
+  }
+  ap_rprintf(xn->request, "{\"%s\": [", dbn);
+  return;
 }
 
 //____________________________________________________________________________
@@ -352,9 +380,9 @@ static void json_db_start(Transaction *xn, char const *dbn) {
 /// - close the array contained output nexted in this database's context
 /// @param xn - the transaction information associated with the HTTP request
 static void json_db_end(Transaction *xn) {
-   ap_rprintf(xn->request, "]%s\n", json_comment_get(xn));
-   json_comment_reset(xn);
-   return;
+  ap_rprintf(xn->request, "]}%s", json_comment_get(xn));
+  json_comment_reset(xn);
+  return;
 }
 
 //____________________________________________________________________________

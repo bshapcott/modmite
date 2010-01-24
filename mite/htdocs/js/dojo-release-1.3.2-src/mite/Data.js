@@ -17,6 +17,7 @@ dojo.declare(
 	
 	//__________________________________________________________________________
 	constructor: function(args) {
+		this.index = 0;
 	},
 
 	//_________________________________________________________________________	
@@ -36,29 +37,50 @@ dojo.declare(
 	//_________________________________________________________________________
 	startup: function() {
 		this.inherited(arguments);
-		mite_send_eval("/mite/game/meta?qid=" + this.id);
+		if (this.query) {
+			if (this.query instanceof Array) {
+				this.sendNext();
+			} else {
+				mite_send_eval(this.query, this.onQueryComplete, this);
+			}
+		}
 	},
 	
 	//_________________________________________________________________________
-	// - propagated from the mite layer
+	sendNext: function() {
+		mite_send_eval(this.query[this.index++],
+			this.index === this.query.length ? this.onQueryComplete : arguments.callee,
+			this);
+	},
+
+	//_________________________________________________________________________
+	// - all one-time (non-polling) queries have been completed
+	onQueryComplete: function() {},
+	
+	//_________________________________________________________________________
+	// - propagated verbatim from the mite layer
+	// - for users that would rather listen on the widget than the mite layer
 	// - rolled up child changes (new, delete on children)
 	// @see dijit.tree.model
 	onChildrenChange: function(parent, children) {},
 	
 	//_________________________________________________________________________
-	// - propagated from the mite layer
+	// - propagated verbatim from the mite layer
+	// - for users that would rather listen on the widget than the mite layer
 	// - fine grained item attribute changes
 	// @see dojo.data.api.Notification
 	onSet: function(element, attr, oval, nval) {},
 	
 	//_________________________________________________________________________
-	// - propagated from the mite layer
+	// - propagated verbatim from the mite layer
+	// - for users that would rather listen on the widget than the mite layer
 	// - rolled up item attribute changes
 	// @see dijit.tree.model
 	onChange: function(element) {},
 	
 	//_________________________________________________________________________
-	// - propagated from the mite layer
+	// - propagated verbatim from the mite layer
+	// - for users that would rather listen on the widget than the mite layer
 	// - fine grained child creation notification
 	// @see dijit.tree.model
 	// @see dojo.data.api.Notification
@@ -66,10 +88,12 @@ dojo.declare(
 	onNew: function(element) {},
 
 	//_________________________________________________________________________
-	// - propagated from the mite layer
+	// - propagated verbatim from the mite layer
+	// - for users that would rather listen on the widget than the mite layer
 	// - fine grained child delete notification
 	// @see dojo.data.api.Notification
-	onDelete: function(element) {}			
+	onDelete: function(element) {}
+
 });
 
 //_________________________________________________________________________ EOF
